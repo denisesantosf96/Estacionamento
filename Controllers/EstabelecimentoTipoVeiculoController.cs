@@ -10,7 +10,7 @@ using X.PagedList;
 
 namespace Estacionamento.Controllers
 {
-    public class EstabelecimentoTipoVeiculo : Controller
+    public class EstabelecimentoTipoVeiculoController : Controller
     {
         private readonly ILogger<EstabelecimentoTipoVeiculoController> _logger;  
         private readonly DadosContext _context ;
