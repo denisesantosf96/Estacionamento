@@ -91,7 +91,7 @@ Create table Manobrista
 CREATE TABLE TipoVeiculo
 (
 Id int not NULL auto_increment,
-Nome varchar(100) not NULL,  
+Tipo varchar(100) not NULL,  
 Valor decimal(10,2) not NULL,
 
 CONTRAINT PK_TipoVeiculo
@@ -148,6 +148,7 @@ CREATE TABLE Estacionamento
   IdManobrista int not NULL,
   IdCliente int NULL,
   Data Datetime not NULL,
+  Situacao varchar(50) not NULL,
   FormaPagamento varchar(100) NULL,
   ValorTotal decimal(10,2) NULL,
   DataPagamento Datetime NULL,
