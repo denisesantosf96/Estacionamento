@@ -1,0 +1,44 @@
+@model EstabelecimentoTipoVeiculo
+@{
+    ViewData["Title"] = "Adicionar um novo Estabelecimento Tipo Veículo";
+}
+
+
+<div class="text-center">
+    <h4>@if (Model.Id > 0)
+        {
+            @Html.Raw("Editar Estebelecimento Tipo Veículo");
+        } else {
+            @Html.Raw("Incluir Estebelecimento Tipo Veículo");
+        }
+    </h4>
+</div>
+
+<form method="POST" asp-action="Detalhe" asp-controller="EstabelecimentoTipoVeiculo" class="form p-5"
+    style="border: 3px solid grey; background: #E6E6E6; border-radius: 15px; margin-top: 30px;">
+    <div class="text-danger">@Html.ValidationSummary()</div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <input asp-for="Id" type="hidden" class="form-control">
+            <label class="form-label">Estabelecimento</label>
+            <select asp-for="IdEstabelecimento" asp-items="@ViewBag.Estabelecimento" class="form-control">
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Tipo Veículo</label>
+            <input asp-for="IdTipoVeiculo" type="text" class="form-control">
+        </div>
+    </div>
+    
+    <input type="submit" value="Salvar" class="btn btn-success" 
+        style="margin-top: 30px; margin-bottom: 15px;">
+    <input type="button" value="Voltar" class="btn btn-success" onclick="Voltar()"
+        style="margin-top: 30px; margin-bottom: 15px;"></td>
+</form>
+
+<script>
+    function Voltar(){
+        window.location.href = "https://localhost:5001/EstabelecimentoTipoVeiculo";
+    }
+</script>
