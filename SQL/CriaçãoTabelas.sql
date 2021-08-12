@@ -64,7 +64,7 @@ Create table Cliente
 
 Create table Manobrista 
 (
- Id int NOT NULL auto_increment,
+  Id int NOT NULL auto_increment,
   Nome Varchar(200) not NULL,
   CPF varchar (20) not NULL,
   RG varchar (20) not NULL,
@@ -90,12 +90,12 @@ Create table Manobrista
 
 CREATE TABLE TipoVeiculo
 (
-Id int not NULL auto_increment,
-Tipo varchar(100) not NULL,  
-Valor decimal(10,2) not NULL,
+  Id int not NULL auto_increment,
+  Tipo varchar(100) not NULL,  
+  Valor decimal(10,2) not NULL,
 
-CONTRAINT PK_TipoVeiculo
-PRIMARY KEY(Id)
+  CONTRAINT PK_TipoVeiculo
+  PRIMARY KEY(Id)
 )
 
 
@@ -123,20 +123,20 @@ PRIMARY KEY(Id)
 
 CREATE TABLE EstabelecimentoTipoVeiculo
 (
-Id int not NULL auto_increment,
-IdEstabelecimento int not NULL,
-IdTipoVeiculo int not NULL,
+  Id int not NULL auto_increment,
+  IdEstabelecimento int not NULL,
+  IdTipoVeiculo int not NULL,
 
-CONSTRAINT PK_EstabelecimentoTipoVeiculo
-PRIMARY KEY(Id),
+  CONSTRAINT PK_EstabelecimentoTipoVeiculo
+  PRIMARY KEY(Id),
 
-CONSTRAINT FK_EstabelecimentoTipoVeiculo_Estabelecimento
-FOREIGN KEY (IdEstabelecimento)
-REFERENCES Estabelecimento(Id),
+  CONSTRAINT FK_EstabelecimentoTipoVeiculo_Estabelecimento
+  FOREIGN KEY (IdEstabelecimento)
+  REFERENCES Estabelecimento(Id),
 
-CONSTRAINT FK_EstabelecimentoTipoVeiculo_TipoVeiculo
-FOREIGN KEY (IdTipoVeiculo)
-REFERENCES TipoVeiculo(Id)
+  CONSTRAINT FK_EstabelecimentoTipoVeiculo_TipoVeiculo
+  FOREIGN KEY (IdTipoVeiculo)
+  REFERENCES TipoVeiculo(Id)
 )
 
 
