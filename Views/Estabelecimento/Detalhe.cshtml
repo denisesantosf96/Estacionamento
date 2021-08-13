@@ -114,15 +114,8 @@
                         <div class="col-md-6">
                             <input asp-for="Id" type="hidden" class="form-control">
                             <label class="form-label">Nome</label>
-                            <select asp-items="@ViewBag.Estabelecimentos"  id="IdEstabelecimento" class="form-control"></select>
+                            <input asp-for="Nome" type="text" class="form-control">
                         </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Tipo Veículo</label>
-                            <input id="IdTipoVeiculo" type="text" class="form-control">
-                        </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-6">
                             <label class="form-label">Valor</label>
                             <input id="Valor" type="text" class="form-control">
