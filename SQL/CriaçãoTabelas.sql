@@ -91,8 +91,7 @@ Create table Manobrista
 CREATE TABLE TipoVeiculo
 (
   Id int not NULL auto_increment,
-  Tipo varchar(100) not NULL,  
-  Valor decimal(10,2) not NULL,
+  Tipo varchar(100) not NULL,
 
   CONTRAINT PK_TipoVeiculo
   PRIMARY KEY(Id)
@@ -126,6 +125,7 @@ CREATE TABLE EstabelecimentoTipoVeiculo
   Id int not NULL auto_increment,
   IdEstabelecimento int not NULL,
   IdTipoVeiculo int not NULL,
+  Valor decimal(10,2) not NULL,
 
   CONSTRAINT PK_EstabelecimentoTipoVeiculo
   PRIMARY KEY(Id),

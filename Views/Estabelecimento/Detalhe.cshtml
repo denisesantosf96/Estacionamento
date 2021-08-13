@@ -3,6 +3,10 @@
     ViewData["Title"] = "Adicionar um novo Estabelecimento";
 }
 
+@section Scripts{
+
+}
+
 <div class="text-center">
     <h4>@if (Model.Id > 0)
         {
@@ -21,12 +25,11 @@
 
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link active" data-target="#cadastro" data-toggle="tab">Pedido</a>
+            <a class="nav-link active" data-target="#cadastro" data-toggle="tab">Estabelecimento</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-target="#itens" data-toggle="tab">Itens</a>
+            <a class="nav-link" data-target="#itens" data-toggle="tab">Valor</a>
         </li>
-
     </ul>
 
     <div class="tab-content">
@@ -102,7 +105,7 @@
         </div>
 
         <div class="tab-pane" id="itens">
-            <div id="divItem" hidden>
+            <div id="divItem">
                 <form class="form p-5"
                     style="border: 3px solid grey; background: #E6E6E6; border-radius: 15px; margin-top: 30px;">
                     <div class="text- danger" id="divErroItem"></div>
@@ -110,20 +113,19 @@
                     <div class="row">
                         <div class="col-md-6">
                             <input asp-for="Id" type="hidden" class="form-control">
-                            <label class="form-label">Estabelecimento</label>
-                            <select asp-for="IdEstabelecimento" asp-items="@ViewBag.Estabelecimentos"
-                                class="form-control"></select>
+                            <label class="form-label">Nome</label>
+                            <select asp-items="@ViewBag.Estabelecimentos"  id="IdEstabelecimento" class="form-control"></select>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Tipo Veículo</label>
-                            <input asp-for="IdTipoVeiculo" type="text" class="form-control">
+                            <input id="IdTipoVeiculo" type="text" class="form-control">
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
                             <label class="form-label">Valor</label>
-                            <input asp-for="Valor" type="text" class="form-control">
+                            <input id="Valor" type="text" class="form-control">
                         </div>
                     </div>
 

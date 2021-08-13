@@ -5,6 +5,8 @@ using MySql.Data.MySqlClient;
 using Estacionamento.Models;
 using X.PagedList;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Estacionamento.Controllers
 {
@@ -30,7 +32,7 @@ namespace Estacionamento.Controllers
             };
             List<Estabelecimento> estabelecimentos = _context.RetornarLista<Models.Estabelecimento>("sp_consultarEstabelecimento", parametros);
             
-            ViewBagEstabelecimentos()
+            ViewBagEstabelecimentos();
             return View(estabelecimentos.ToPagedList(numeroPagina, itensPorPagina));
         }
 
