@@ -22,15 +22,12 @@
 </div>
 
 <script>
-    function Redirecionar() {
-        var estabelecimento = $('#idEstabelecimento').val(); 
-        window.location = "TipoVeiculo/Detalhe?idestabelecimento="+estabelecimento 
 
     function Limpar() {
         $('#textopesquisa').val(''); 
-        $('#idEstabelecimento').val('');
         Pesquisar();
     }
+    
     function Pesquisar() {
         //var result = document.getElementById("textopesquisa").value;
         var result = $('#textopesquisa').val(); 
@@ -42,12 +39,14 @@
                 $('#divpartial').html(data);  
             });
     }
+
     function VerificarDigitacao(e) {
         var code = (e.keyCode ? e.keyCode : e.which);
         if (code == 13) { 
             Pesquisar();
         }
     }
+
     function Excluir(id) {
         var result = confirm("Tem certeza que quer excluir?");
         if (result) {
@@ -63,4 +62,5 @@
                 });
         }
     }
+
 </script>
