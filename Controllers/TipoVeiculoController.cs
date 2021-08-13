@@ -55,8 +55,7 @@ namespace Estacionamento.Controllers
             if(ModelState.IsValid){
            
                 List<MySqlParameter> parametros = new List<MySqlParameter>(){
-                    new MySqlParameter("Tipo", tipoveiculo.Tipo),
-                    new MySqlParameter("Valor", tipoveiculo.Valor)
+                    new MySqlParameter("Tipo", tipoveiculo.Tipo)
                     
                 };
                 if (tipoveiculo.Id > 0){

@@ -25,7 +25,7 @@ namespace Estacionamento.Controllers
         public IActionResult Index(int? pagina)
         {
             
-            var idEstabelecimento = 1;          
+            var idEstabelecimento = 1;           
             int numeroPagina = (pagina ?? 1);
             
 
@@ -65,7 +65,8 @@ namespace Estacionamento.Controllers
                 List<MySqlParameter> parametros = new List<MySqlParameter>(){
                     
                     new MySqlParameter("IdEstabelecimento", estabelecimentosveiculos.IdEstabelecimento),
-                    new MySqlParameter("IdTipoVeiculo", estabelecimentosveiculos.IdTipoVeiculo)                 
+                    new MySqlParameter("IdTipoVeiculo", estabelecimentosveiculos.IdTipoVeiculo),
+                    new MySqlParameter("Valor", estabelecimentosveiculos.Valor)                 
                 };
                 if (estabelecimentosveiculos.Id > 0){
                     parametros.Add(new MySqlParameter("identificacao", estabelecimentosveiculos.Id));
@@ -116,5 +117,6 @@ namespace Estacionamento.Controllers
                 Text= c.Nome, Value= c.Id.ToString()
             }).ToList();
         }
+
     }
 }

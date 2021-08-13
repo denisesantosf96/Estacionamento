@@ -30,6 +30,7 @@ namespace Estacionamento.Controllers
             };
             List<Estabelecimento> estabelecimentos = _context.RetornarLista<Models.Estabelecimento>("sp_consultarEstabelecimento", parametros);
             
+            ViewBagEstabelecimentos()
             return View(estabelecimentos.ToPagedList(numeroPagina, itensPorPagina));
         }
 
@@ -42,6 +43,7 @@ namespace Estacionamento.Controllers
             };
                 estabelecimento = _context.ListarObjeto<Models.Estabelecimento>("sp_buscarEstabelecimentoPorId", parametros); 
             }
+            
                    
             return View(estabelecimento);
         }
@@ -127,6 +129,19 @@ namespace Estacionamento.Controllers
 
             return PartialView(estabelecimentos.ToPagedList(1, itensPorPagina));
         }
+
+        private void ViewBagEstabelecimentos(){
+            MySqlParameter[] param = new MySqlParameter[]{
+                new MySqlParameter("_nome", "")
+            };
+            List<Models.Estabelecimento> estabelecimentos = new List<Models.Estabelecimento>(); 
+            estabelecimentos = _context.RetornarLista<Models.Estabelecimento>("sp_consultarEstabelecimento", param);
+            
+            ViewBag.Estabelecimentos = estabelecimentos.Select(c => new SelectListItem(){
+                Text= c.Nome, Value= c.Id.ToString()
+            }).ToList();
+        }
+
     }
 }
 
