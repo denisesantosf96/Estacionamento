@@ -24,18 +24,15 @@ namespace Estacionamento.Controllers
 
         public IActionResult Index(int? pagina)
         {
-            var tipo = HttpContext.Session.GetString("TextoPesquisa"); 
-            var idEstabelecimento = 1;           
+            var tipo = HttpContext.Session.GetString("TextoPesquisa");
             int numeroPagina = (pagina ?? 1);
 
             MySqlParameter[] parametros = new MySqlParameter[]{
-                new MySqlParameter("_tipo", tipo),
-                new MySqlParameter("_IdEstabelecimento", idEstabelecimento)
+                new MySqlParameter("_tipo", tipo)
 
             };
             List<TipoVeiculo> tiposveiculos = _context.RetornarLista<TipoVeiculo>("sp_consultarTipoVeiculo", parametros);
             
-            ViewBagEstabelecimentos();
             return View(tiposveiculos.ToPagedList(numeroPagina, itensPorPagina));
         }
 
@@ -48,8 +45,7 @@ namespace Estacionamento.Controllers
             };
                 tiposveiculos = _context.ListarObjeto<Models.TipoVeiculo>("sp_buscarTipoVeiculoPorId", parametros); 
             }
-
-            ViewBagEstabelecimentos();       
+       
             return View(tiposveiculos);
         }
 
@@ -78,7 +74,6 @@ namespace Estacionamento.Controllers
                 }
             }
 
-            ViewBagEstabelecimentos();
             return View(tipoveiculo);
         }
 
@@ -90,10 +85,9 @@ namespace Estacionamento.Controllers
             return new JsonResult(new {Sucesso = retorno.Mensagem == "Excluído", Mensagem = retorno.Mensagem });
         }
 
-        public PartialViewResult ListaPartialView(string tipo, int idEstabelecimento){
+        public PartialViewResult ListaPartialView(string tipo){
             MySqlParameter[] parametros = new MySqlParameter[]{
-                new MySqlParameter("_tipo", tipo),
-                new MySqlParameter("_IdEstabelecimento", idEstabelecimento)
+                new MySqlParameter("_tipo", tipo)
             };
             List<TipoVeiculo> tiposveiculos = _context.RetornarLista<TipoVeiculo>("sp_consultarTipoVeiculo", parametros);
             if (string.IsNullOrEmpty(tipo)){
@@ -102,21 +96,7 @@ namespace Estacionamento.Controllers
             HttpContext.Session.SetString("TextoPesquisa", tipo);
             }
 
-            HttpContext.Session.SetInt32("IdEstabelecimento", idEstabelecimento);
-
             return PartialView(tiposveiculos.ToPagedList(1, itensPorPagina));
-        }
-
-        private void ViewBagEstabelecimentos(){
-            MySqlParameter[] param = new MySqlParameter[]{
-                new MySqlParameter("_nome", "")
-            };
-            List<Models.Estabelecimento> estabelecimentos = new List<Models.Estabelecimento>(); 
-            estabelecimentos = _context.RetornarLista<Models.Estabelecimento>("sp_consultarEstabelecimento", param);
-            
-            ViewBag.Estabelecimentos = estabelecimentos.Select(c => new SelectListItem(){
-                Text= c.Nome, Value= c.Id.ToString()
-            }).ToList();
         }
     }
 }
