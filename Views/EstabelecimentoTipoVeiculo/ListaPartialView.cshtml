@@ -17,8 +17,8 @@
                 <tr>
             <td>@Model[i].Id</td>
             <td>@Model[i].Nome</td>
-            <td><input type="button" value="Editar" class="btn btn-dark" onclick="javascript:window.location=`/EstabelecimentoTipoVeiculo/Detalhe/${@Model[i].Id}`">
-            <input type="button" value="Excluir" class="btn btn-danger" onclick="Excluir(@Model[i].Id)"></td>
+            <td><input type="button" name="EditarEstabelecimentoTipoVeiculo" class="btn btn-dark" onclick="EditarEstabelecimentoTipoVeiculo(@Model[i].Id)">
+            <input type="button" name="ExcluirEstabelecimentoTipoVeiculo" class="btn btn-danger" onclick="Excluir(@Model[i].Id)"></td>
             
             </tr>
             }

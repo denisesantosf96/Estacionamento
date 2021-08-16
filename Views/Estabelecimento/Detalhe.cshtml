@@ -28,7 +28,7 @@
             <a class="nav-link active" data-target="#cadastro" data-toggle="tab">Estabelecimento</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-target="#itens" data-toggle="tab">Valor</a>
+            <a class="nav-link" data-target="#itens" data-toggle="tab">Estabelecimento Tipo Veículo</a>
         </li>
     </ul>
 
@@ -97,7 +97,7 @@
                 </div>
 
 
-                <input type="submit" value="Salvar" class="btn btn-success"
+                <input id="SalvarEstabelecimento" type="submit" value="Salvar" class="btn btn-success"
                     style="margin-top: 30px; margin-bottom: 15px;">
                 <input type="button" value="Voltar" class="btn btn-success" onclick="Voltar()"
                     style="margin-top: 30px; margin-bottom: 15px;"></td>
@@ -112,7 +112,7 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <input asp-for="Id" type="hidden" class="form-control">
+                            <input id="IdEstabelecimentoTipoVeiculo" type="hidden" class="form-control">
                             <label class="form-label">Nome</label>
                             <input asp-for="Nome" type="text" class="form-control">
                         </div>
@@ -122,7 +122,7 @@
                         </div>
                     </div>
 
-                    <input type="submit" value="Salvar" class="btn btn-success"
+                    <input type="button" value="Salvar" onclick="SalvarEstabelecimentoTipoVeiculo()" class="btn btn-success"
                         style="margin-top: 30px; margin-bottom: 15px;">
                     <input type="button" value="Voltar" class="btn btn-success" onclick="Voltar()"
                         style="margin-top: 30px; margin-bottom: 15px;"></td>
@@ -133,6 +133,63 @@
 
     function Voltar() {
         window.location.href = "https://localhost:5001/Estabelecimento";
+    }
+
+    function SalvarEstabelecimentoTipoVeiculo() {
+        var idEstabelecimento = $('#Id').val();
+        var valor = $('#Valor').val();
+        debugger;
+
+        if (valor == "") {
+            $('#divErroItem').html("Preencha o valor, por favor");
+            return;
+        }
+
+        var url = '/EstabelecimentoTipoVeiculo/Salvar';
+        var parametros = { IdEstabelecimento : idEstabelecimento, Valor : valor }; 
+        $.post(url, parametros)
+            .done(function (data) {
+                if (data.sucesso) {
+                    $('#divItem').prop('hidden', true);
+                } else {
+                    $('#divErroItem').html(data.mensagem);
+                }
+            });
+    }
+
+    function EditarEstabelecimentoTipoVeiculo(id) {
+        var url = '/EstabelecimentoTipoVeiculo/Editar';
+        var parametros = { id: id }
+        $.get(url, parametros)
+            .done(function (data) {
+                if (data.sucesso) {
+                    $('#IdEstabelecimentoTipoVeiculo').val(data.estabelecimentotipoveiculo.id);
+                    $('#Id').val(data.estabelecimentotipoveiculo.idEstabelecimento);
+                    $('#IdTipoVeiculo').val(data.estabelecimentotipoveiculo.idTipoVeiculo);
+                    $('#Valor').val(data.estabelecimentotipoveiculo.valor);
+                } else {
+                    alert('Não encontrado');
+                }
+            });
+    }
+
+    function Excluir(id) {
+        var result = confirm("Tem certeza que quer excluir?");
+        if (result) {
+            var url = "/EstabelecimentoTipoVeiculo/Excluir";
+            var parametros = { id: id };
+            $.get(url, parametros) 
+                .done(function (data) { 
+
+                    if (data.sucesso) { 
+                    
+                        PesquisarItens();
+                    } else {
+                        alert(data.mensagem);
+                    }
+
+                });
+        }
     }
     
 </script>

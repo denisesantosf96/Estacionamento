@@ -39,7 +39,7 @@ namespace Estacionamento.Controllers
             return View(estabelecimentosveiculos.ToPagedList(numeroPagina, itensPorPagina));
         }
 
-        public IActionResult Detalhe(int id)
+        public IActionResult Editar(int id)
         {
             Models.EstabelecimentoTipoVeiculo estabelecimentoveiculo = new Models.EstabelecimentoTipoVeiculo();
             if (id > 0)  {
@@ -56,11 +56,9 @@ namespace Estacionamento.Controllers
 
 
         [HttpPost]
-        public IActionResult Detalhe(Models.EstabelecimentoTipoVeiculo estabelecimentosveiculos){
+        public IActionResult Salvar(Models.EstabelecimentoTipoVeiculo estabelecimentosveiculos){
             
-            
-
-            if(ModelState.IsValid){
+            string mensagem = "";
            
                 List<MySqlParameter> parametros = new List<MySqlParameter>(){
                     
@@ -79,10 +77,8 @@ namespace Estacionamento.Controllers
                     ModelState.AddModelError("", retorno.Mensagem);
                     
                 }
-            }
 
-            ViewBagEstabelecimentos();
-            return View(estabelecimentosveiculos);
+            return new JsonResult(new {Sucesso = false, Mensagem = mensagem});
         }
 
         public JsonResult Excluir(int id){
