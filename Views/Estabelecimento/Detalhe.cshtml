@@ -118,7 +118,7 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Id Tipo Veículo</label>
-                            <input id="IdTipoVeiculo" class="form-control">
+                            <input id="IdTipoVeiculo" type="text" class="form-control">
                         </div>
                     </div>
 
@@ -147,6 +147,7 @@
         var idEstabelecimento = $('#Id').val();
         var idTipoVeiculo = $('#IdTipoVeiculo').val();
         var valor = $('#Valor').val();
+        debugger;
 
         if (valor == "") {
             $('#divErroItem').html("Preencha o valor, por favor");
