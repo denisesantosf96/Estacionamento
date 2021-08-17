@@ -35,7 +35,6 @@ namespace Estacionamento.Controllers
             };
             List<EstabelecimentoTipoVeiculo> estabelecimentosveiculos = _context.RetornarLista<EstabelecimentoTipoVeiculo>("sp_consultarEstabelecimentoTipoVeiculo", parametros);
             
-            ViewBagEstabelecimentos();
             return View(estabelecimentosveiculos.ToPagedList(numeroPagina, itensPorPagina));
         }
 
@@ -49,7 +48,6 @@ namespace Estacionamento.Controllers
                 estabelecimentoveiculo = _context.ListarObjeto<EstabelecimentoTipoVeiculo>("sp_buscarEstabelecimentoTipoVeiculoPorId", parametros); 
             }
 
-            ViewBagEstabelecimentos();
             return View(estabelecimentoveiculo);
         }
 

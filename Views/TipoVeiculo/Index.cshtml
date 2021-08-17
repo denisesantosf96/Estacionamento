@@ -2,14 +2,14 @@
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @model X.PagedList.IPagedList<TipoVeiculo>
 @{
-    ViewData["Title"] = "Cadastro de Categorias";
+    ViewData["Title"] = "Cadastro de Tipo Veículo";
 }
 
 @section Scripts{
 
 }
 <div class="text-center">
-    <h4>Cadastro de Categorias</h4>
+    <h4>Cadastro de Tipo Veículo</h4>
     <input type="text" id="textopesquisa" class="form-control" onkeyup="VerificarDigitacao(event)" value="@HttpContextAccessor.HttpContext.Session.GetString("TextoPesquisa")">
     <input type="button" value="Limpar" onclick="Limpar()" class="btn btn-primary">
     <input type="button" value="Pesquisar" onclick="Pesquisar()" class="btn btn-primary">

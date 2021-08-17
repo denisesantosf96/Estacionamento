@@ -117,6 +117,13 @@
                             <input asp-for="Nome" type="text" class="form-control">
                         </div>
                         <div class="col-md-6">
+                            <label class="form-label">Id Tipo Veículo</label>
+                            <input id="IdTipoVeiculo" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
                             <label class="form-label">Valor</label>
                             <input id="Valor" type="text" class="form-control">
                         </div>
@@ -134,11 +141,12 @@
     function Voltar() {
         window.location.href = "https://localhost:5001/Estabelecimento";
     }
-
+ 
     function SalvarEstabelecimentoTipoVeiculo() {
+        var idEstabelecimentoTipoVeiculo = $('#IdEstabelecimentoTipoVeiculo').val();
         var idEstabelecimento = $('#Id').val();
+        var idTipoVeiculo = $('#IdTipoVeiculo').val();
         var valor = $('#Valor').val();
-        debugger;
 
         if (valor == "") {
             $('#divErroItem').html("Preencha o valor, por favor");
@@ -146,11 +154,12 @@
         }
 
         var url = '/EstabelecimentoTipoVeiculo/Salvar';
-        var parametros = { IdEstabelecimento : idEstabelecimento, Valor : valor }; 
+        var parametros = { Id : idEstabelecimentoTipoVeiculo, IdEstabelecimento : idEstabelecimento, 
+        IdTipoVeiculo: idTipoVeiculo, Valor : valor }; 
         $.post(url, parametros)
             .done(function (data) {
                 if (data.sucesso) {
-                    $('#divItem').prop('hidden', true);
+                    $('#divItem').prop(true);
                 } else {
                     $('#divErroItem').html(data.mensagem);
                 }
