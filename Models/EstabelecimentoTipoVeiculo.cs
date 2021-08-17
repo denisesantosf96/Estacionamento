@@ -5,7 +5,7 @@ namespace Estacionamento.Models
         public int Id { get; set; }
         public int IdEstabelecimento { get; set; }
         public int IdTipoVeiculo { get; set; }
-        public string Nome { get; set; }
         public decimal Valor { get; set; }
+        public string Nome { get; set; }
     }
 }

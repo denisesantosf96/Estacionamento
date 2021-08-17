@@ -141,7 +141,17 @@
     function Voltar() {
         window.location.href = "https://localhost:5001/Estabelecimento";
     }
- 
+    
+    function PesquisarEstabelecimentos() {
+        var result = $('#Id').val(); 
+        var url = '/EstabelecimentoTipoVeiculo/ListaPartialView';
+        var parametros = { idEstabelecimento: result };
+        $.get(url, parametros) 
+            .done(function (data) {
+                $('#divpartialitens').html(data);  
+            });
+    }
+
     function SalvarEstabelecimentoTipoVeiculo() {
         var idEstabelecimentoTipoVeiculo = $('#IdEstabelecimentoTipoVeiculo').val();
         var idEstabelecimento = $('#Id').val();
@@ -160,7 +170,7 @@
         $.post(url, parametros)
             .done(function (data) {
                 if (data.sucesso) {
-                    $('#divItem').prop(true);
+                    PesquisarEstabelecimentos();
                 } else {
                     $('#divErroItem').html(data.mensagem);
                 }
