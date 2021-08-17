@@ -1,15 +1,15 @@
 @model TipoVeiculo
 @{
-    ViewData["Title"] = "Adicionar um nova Categoria";
+    ViewData["Title"] = "Adicionar Tipo de Veículo";
 }
 
 
 <div class="text-center">
     <h4>@if (Model.Id > 0)
         {
-            @Html.Raw("Editar Tipo Veículo");
+            @Html.Raw("Editar Tipo de Veículo");
         } else {
-            @Html.Raw("Incluir Tipo Veículo");
+            @Html.Raw("Incluir Tipo de Veículo");
         }
     </h4>
 </div>

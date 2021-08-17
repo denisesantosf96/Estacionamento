@@ -65,6 +65,8 @@ namespace Estacionamento.Models
 
         public T ListarObjeto<T>(string procedure, MySqlParameter[] parametros) where T : class, new()
         {
+            try{
+
             
             Type type = typeof(T);
             ConstructorInfo ctor = type.GetConstructor(Type.EmptyTypes);
@@ -107,6 +109,10 @@ namespace Estacionamento.Models
                 }
             }
             return newInst;
+            }
+            catch(Exception e){
+                throw e;
+            }
         }
 
     }

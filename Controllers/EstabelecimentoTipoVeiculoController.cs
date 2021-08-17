@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Estacionamento.Models;
@@ -55,8 +56,8 @@ namespace Estacionamento.Controllers
 
         [HttpPost]
         public IActionResult Salvar(Models.EstabelecimentoTipoVeiculo estabelecimentosveiculos){
-            
-            string mensagem = "";
+            try {
+                string mensagem = "";
            
                 List<MySqlParameter> parametros = new List<MySqlParameter>(){
                     
@@ -77,6 +78,12 @@ namespace Estacionamento.Controllers
                 }
 
             return new JsonResult(new {Sucesso = false, Mensagem = mensagem});
+            }
+            catch(Exception erro) {
+                string mensagem = erro.Message;
+                return new JsonResult(new {Sucesso = false, Mensagem = erro.Message});
+            }
+            
         }
 
         public JsonResult Excluir(int id){
