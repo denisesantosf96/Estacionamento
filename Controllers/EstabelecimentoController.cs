@@ -46,7 +46,7 @@ namespace Estacionamento.Controllers
                 estabelecimento = _context.ListarObjeto<Models.Estabelecimento>("sp_buscarEstabelecimentoPorId", parametros); 
             }
             
-                   
+            ViewBagTiposVeiculos();      
             return View(estabelecimento);
         }
 
@@ -107,6 +107,7 @@ namespace Estacionamento.Controllers
                     
                 }
             }
+            ViewBagTiposVeiculos();
             return View(estabelecimento);
         }
 
@@ -141,6 +142,18 @@ namespace Estacionamento.Controllers
             
             ViewBag.Estabelecimentos = estabelecimentos.Select(c => new SelectListItem(){
                 Text= c.Nome, Value= c.Id.ToString()
+            }).ToList();
+        }
+
+        private void ViewBagTiposVeiculos(){
+            MySqlParameter[] param = new MySqlParameter[]{
+                new MySqlParameter("_tipo", "")
+            };
+            List<Models.TipoVeiculo> tiposveiculos = new List<Models.TipoVeiculo>(); 
+            tiposveiculos = _context.RetornarLista<Models.TipoVeiculo>("sp_consultarTipoVeiculo", param);
+            
+            ViewBag.TiposVeiculos = tiposveiculos.Select(c => new SelectListItem(){
+                Text= c.Tipo, Value= c.Id.ToString()
             }).ToList();
         }
 

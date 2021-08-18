@@ -6,9 +6,9 @@
         <thead class="thead-dark">
         <tr>
             <th>Id</th>
-            <th>Nome</th>
+            <th>Tipo de Veículo</th>
             
-            <th>Id Tipo Veiculo</th>
+            <th>Valor</th>
             <th></th>
         </tr>
         </thead>
@@ -17,10 +17,10 @@
             {
                 <tr>
             <td>@Model[i].Id</td>
-            <td>@Model[i].Nome</td>
             <td>@Model[i].IdTipoVeiculo</td>
-            <td><input type="button" name="EditarEstabelecimentoTipoVeiculo" class="btn btn-dark" onclick="EditarEstabelecimentoTipoVeiculo(@Model[i].Id)">
-            <input type="button" name="ExcluirEstabelecimentoTipoVeiculo" class="btn btn-danger" onclick="Excluir(@Model[i].Id)"></td>
+            <td>@Model[i].Valor</td>
+            <td><input type="button" name="EditarEstabelecimentoTipoVeiculo" value="Editar" class="btn btn-dark" onclick="EditarEstabelecimentoTipoVeiculo(@Model[i].Id)">
+            <input type="button" name="ExcluirEstabelecimentoTipoVeiculo" value="Excluir" class="btn btn-danger" onclick="Excluir(@Model[i].Id)"></td>
             
             </tr>
             }

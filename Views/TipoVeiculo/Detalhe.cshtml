@@ -21,13 +21,8 @@
     <div class="row">
         <div class="col-md-6">
             <input asp-for="Id" type="hidden" class="form-control">
-            <label class="form-label">Categoria</label>
-            <select asp-for="Tipo" class="form-control">
-                <option value=""></option>
-                <option value="Carro">Carro</option>
-                <option value="Carro Grande Porte">Carro Grande Porte</option>
-                <option value="Motocicleta">Motocicleta</option>
-            </select>
+            <label for="inputTipo" class="form-label">Tipo</label>
+            <input asp-for="Tipo" type="text" class="form-control">
         </div>
     </div>
 

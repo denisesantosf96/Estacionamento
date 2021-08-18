@@ -107,15 +107,15 @@ namespace Estacionamento.Controllers
             return PartialView(estabelecimentoveiculos.ToPagedList(1, itensPorPagina));
         }
 
-        private void ViewBagEstabelecimentos(){
+        private void ViewBagTiposVeiculos(){
             MySqlParameter[] param = new MySqlParameter[]{
-                new MySqlParameter("_nome", "")
+                new MySqlParameter("_tipo", "")
             };
-            List<Models.Estabelecimento> estabelecimentos = new List<Models.Estabelecimento>(); 
-            estabelecimentos = _context.RetornarLista<Models.Estabelecimento>("sp_consultarEstabelecimento", param);
+            List<Models.TipoVeiculo> tiposveiculos = new List<Models.TipoVeiculo>(); 
+            tiposveiculos = _context.RetornarLista<Models.TipoVeiculo>("sp_consultarTipoVeiculo", param);
             
-            ViewBag.Estabelecimentos = estabelecimentos.Select(c => new SelectListItem(){
-                Text= c.Nome, Value= c.Id.ToString()
+            ViewBag.TiposVeiculos = tiposveiculos.Select(c => new SelectListItem(){
+                Text= c.Tipo, Value= c.Id.ToString()
             }).ToList();
         }
 

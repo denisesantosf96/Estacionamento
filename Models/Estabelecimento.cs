@@ -13,5 +13,6 @@ namespace Estacionamento.Models
         public string CEP { get; set; }
         public string Telefone { get; set; }
         public string HorarioFuncionamento { get; set; }
+        public int IdTipoVeiculo { get; set; }
     }
 }

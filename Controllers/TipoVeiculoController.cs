@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Estacionamento.Models;
@@ -78,7 +79,7 @@ namespace Estacionamento.Controllers
         }
 
         public JsonResult Excluir(int id){
-            MySqlParameter[] parametros = new MySqlParameter[]{
+                MySqlParameter[] parametros = new MySqlParameter[]{
                 new MySqlParameter("identificacao", id)
             };
             var retorno = _context.ListarObjeto<RetornoProcedure>("sp_excluirTipoVeiculo", parametros);

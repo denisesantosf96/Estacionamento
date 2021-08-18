@@ -105,7 +105,7 @@
         </div>
 
         <div class="tab-pane" id="itens">
-            <div id="divItem">
+            <div id="divItem" >
                 <form class="form p-5"
                     style="border: 3px solid grey; background: #E6E6E6; border-radius: 15px; margin-top: 30px;">
                     <div class="text- danger" id="divErroItem"></div>
@@ -113,14 +113,9 @@
                     <div class="row">
                         <div class="col-md-6">
                             <input id="IdEstabelecimentoTipoVeiculo" type="hidden" class="form-control">
-                            <label class="form-label">Nome</label>
-                            <input asp-for="Nome" type="text" class="form-control">
+                            <label class="form-label">Tipo de Veículo</label>
+                            <select asp-items="@ViewBag.TiposVeiculos" asp-for="IdTipoVeiculo" class="form-control"></select>
                         </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Id Tipo Veículo</label>
-                            <input id="IdTipoVeiculo" type="text" class="form-control">
-                        </div>
-                    </div>
 
                     <div class="row">
                         <div class="col-md-6">
@@ -129,19 +124,48 @@
                         </div>
                     </div>
 
-                    <input type="button" value="Salvar" onclick="SalvarEstabelecimentoTipoVeiculo()" class="btn btn-success"
+                    <input type="button" value="Salvar" onclick="SalvarEstabelecimentoTipoVeiculo()" class="btn btn-success" 
                         style="margin-top: 30px; margin-bottom: 15px;">
-                    <input type="button" value="Voltar" class="btn btn-success" onclick="Voltar()"
+                    <input type="button" value="Cancelar" class="btn btn-success" onclick="Cancelar()"
                         style="margin-top: 30px; margin-bottom: 15px;"></td>
                 </form>
             </div>
 
+            <input type="button" id="Novo" value="Novo" onclick="Adicionar()" class="btn btn-primary"
+                style="margin-top: 30px; margin-bottom: 30px;">
+            <input type="button" value="Voltar" onclick="Voltar()" class="btn btn-primary" 
+                    style="margin-top: 30px; margin-bottom: 30px;"></td>  
+
+            <div id="divpartialitens">
+
+            </div>
+
+        </div>
+    </div>
+</div>        
+
 <script>
+
+    window.onload = function () {
+        PesquisarEstabelecimentos();
+
+    }
 
     function Voltar() {
         window.location.href = "https://localhost:5001/Estabelecimento";
     }
-    
+     
+    function Adicionar() {
+        $('#divItem').prop('hidden', false);
+        Limpar();
+    }
+
+    function Limpar(){
+        $('#IdEstabelecimentoTipoVeiculo').val('');
+        $('#IdTipoVeiculo').val('');
+        $('#Valor').val('');
+    }
+
     function PesquisarEstabelecimentos() {
         var result = $('#Id').val(); 
         var url = '/EstabelecimentoTipoVeiculo/ListaPartialView';
@@ -170,7 +194,9 @@
         $.post(url, parametros)
             .done(function (data) {
                 if (data.sucesso) {
+                    $('#divItem').prop('hidden', true);
                     PesquisarEstabelecimentos();
+                    Limpar();
                 } else {
                     $('#divErroItem').html(data.mensagem);
                 }
@@ -183,6 +209,7 @@
         $.get(url, parametros)
             .done(function (data) {
                 if (data.sucesso) {
+                    $('#divItem').prop('hidden', false);
                     $('#IdEstabelecimentoTipoVeiculo').val(data.estabelecimentotipoveiculo.id);
                     $('#Id').val(data.estabelecimentotipoveiculo.idEstabelecimento);
                     $('#IdTipoVeiculo').val(data.estabelecimentotipoveiculo.idTipoVeiculo);
