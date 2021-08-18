@@ -183,9 +183,9 @@
 
     function SalvarEstabelecimentoTipoVeiculo() {
         var idEstabelecimentoTipoVeiculo = $('#IdEstabelecimentoTipoVeiculo').val();
+        var idEstabelecimento = $('#Id').val();
         var idTipoVeiculo = $('#IdTipoVeiculo').val();
         var valor = $('#Valor').val();
-        debugger;
 
         if (valor == "") {
             $('#divErroItem').html("Preencha o valor, por favor");
@@ -193,12 +193,11 @@
         }
 
         var url = '/EstabelecimentoTipoVeiculo/Salvar';
-        var parametros = { Id : idEstabelecimentoTipoVeiculo, IdTipoVeiculo: idTipoVeiculo, 
-        Valor : valor }; 
+        var parametros = { IdEstabelecimento : idEstabelecimento,  Id : idEstabelecimentoTipoVeiculo, 
+        IdTipoVeiculo: idTipoVeiculo, Valor : valor }; 
         $.post(url, parametros)
             .done(function (data) {
                 if (data.sucesso) {
-                    $('#divItem').prop('hidden', true);
                     PesquisarEstabelecimentos();
                     Limpar();
                 } else {
@@ -213,8 +212,8 @@
         $.get(url, parametros)
             .done(function (data) {
                 if (data.sucesso) {
-                    $('#divItem').prop('hidden', false);
                     $('#IdEstabelecimentoTipoVeiculo').val(data.estabelecimentotipoveiculo.id);
+                    $('#IdEstabelecimento').val(data.estabelecimentotipoveiculo.idEstabelecimento);
                     $('#IdTipoVeiculo').val(data.estabelecimentotipoveiculo.idTipoVeiculo);
                     $('#Valor').val(data.estabelecimentotipoveiculo.valor);
                 } else {
