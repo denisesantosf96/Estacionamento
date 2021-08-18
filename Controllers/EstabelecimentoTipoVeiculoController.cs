@@ -49,7 +49,7 @@ namespace Estacionamento.Controllers
                 estabelecimentoveiculo = _context.ListarObjeto<EstabelecimentoTipoVeiculo>("sp_buscarEstabelecimentoTipoVeiculoPorId", parametros); 
             }
 
-            return View(estabelecimentoveiculo);
+            return new JsonResult(new {Sucesso = estabelecimentoveiculo.Id > 0, EstabelecimentoTipoVeiculo = estabelecimentoveiculo});
         }
 
 
