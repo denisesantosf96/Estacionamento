@@ -183,6 +183,7 @@
                     $('#divItem').prop('hidden', true);
                     PesquisarEstabelecimentos();
                     Limpar();
+                    return;
                 } else {
                     $('#divErroItem').html(data.mensagem);
                 }
@@ -196,9 +197,9 @@
             .done(function (data) {
                 if (data.sucesso) {
                     $('#divItem').prop('hidden', false);
-                    $('#IdEstabelecimentoTipoVeiculo').val(data.estabelecimentotipoveiculo.id);
-                    $('#IdTipoVeiculo').val(data.estabelecimentotipoveiculo.idTipoVeiculo);
-                    $('#Valor').val(data.estabelecimentotipoveiculo.valor);
+                    $('#IdEstabelecimentoTipoVeiculo').val(data.estabelecimentoTipoVeiculo.id);
+                    $('#IdTipoVeiculo').val(data.estabelecimentoTipoVeiculo.idTipoVeiculo);
+                    $('#Valor').val(data.estabelecimentoTipoVeiculo.valor);
                 } else {
                     alert('Não encontrado');
                 }

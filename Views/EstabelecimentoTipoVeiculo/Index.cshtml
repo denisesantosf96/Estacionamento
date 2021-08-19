@@ -45,7 +45,19 @@
     }
 
     function Excluir(id) {
-        alert("Solicitação negada! A mesa só pode ser excluída através do pedido");
+        var result = confirm("Tem certeza que quer excluir?");
+        if (result) {
+            var url = "/EstabelecimentoTipoVeiculo/Excluir";
+            var parametros = { id: id };
+            $.get(url, parametros) 
+                .done(function (data) { 
+                    if (data.sucesso) { 
+                        document.location.reload(true);
+                    } else {
+                        alert(data.mensagem);
+                    }
+                });
+        }
     }
     
 </script>

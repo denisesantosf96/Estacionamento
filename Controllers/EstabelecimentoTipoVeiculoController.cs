@@ -41,7 +41,10 @@ namespace Estacionamento.Controllers
 
         public IActionResult Editar(int id)
         {
-            Models.EstabelecimentoTipoVeiculo estabelecimentoveiculo = new Models.EstabelecimentoTipoVeiculo();
+            
+        
+            try{
+                Models.EstabelecimentoTipoVeiculo estabelecimentoveiculo = new Models.EstabelecimentoTipoVeiculo();
             if (id > 0)  {
                 MySqlParameter[] parametros = new MySqlParameter[]{
                 new MySqlParameter("identificacao", id)
@@ -50,6 +53,11 @@ namespace Estacionamento.Controllers
             }
 
             return new JsonResult(new {Sucesso = estabelecimentoveiculo.Id > 0, EstabelecimentoTipoVeiculo = estabelecimentoveiculo});
+            }
+            catch(Exception erro){
+                return new JsonResult(new {Sucesso = false});
+            }
+            
         }
 
 
@@ -71,10 +79,9 @@ namespace Estacionamento.Controllers
                 var retorno = _context.ListarObjeto<RetornoProcedure>(estabelecimentosveiculos.Id > 0? "sp_atualizarEstabelecimentoTipoVeiculo" : "sp_inserirEstabelecimentoTipoVeiculo", parametros.ToArray());
             
                 if (retorno.Mensagem == "Ok"){
-                    return RedirectToAction("Index");
+                    return new JsonResult(new {Sucesso = retorno.Mensagem == "Ok"});
                 } else {
-                    ModelState.AddModelError("", retorno.Mensagem);
-                    
+                    mensagem = retorno.Mensagem; 
                 }
 
             return new JsonResult(new {Sucesso = false, Mensagem = mensagem});
