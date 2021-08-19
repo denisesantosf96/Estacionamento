@@ -1,12 +1,22 @@
+using System.Collections.Generic;
+using System.Linq;
+using Estacionamento.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
+using MySql.Data.MySqlClient;
+using X.PagedList;
+
 namespace Estacionamento.Controllers
 {
     public class VeiculoController : Controller
     {
-        private readonly ILogger<MesaController> _logger;  
+        private readonly ILogger<VeiculoController> _logger;  
         private readonly DadosContext _context ;
         const int itensPorPagina = 5; 
 
-        public MesaController(ILogger<MesaController> logger, DadosContext context)
+        public VeiculoController(ILogger<VeiculoController> logger, DadosContext context)
         {
             _logger = logger;
             _context = context;
@@ -15,57 +25,56 @@ namespace Estacionamento.Controllers
         public IActionResult Index(int? pagina)
         {
             
-            var idRestaurante = 1;
-            var localizacao = HttpContext.Session.GetString("TextoPesquisa");          
+            var idTipoVeiculo = 1;         
             int numeroPagina = (pagina ?? 1);
             
 
             MySqlParameter[] parametros = new MySqlParameter[]{
-                new MySqlParameter("_localizacao", localizacao),
-                new MySqlParameter("_idRestaurante", idRestaurante)
+                new MySqlParameter("_IdTipoVeiculo", idTipoVeiculo)
                 
             };
-            List<Mesa> mesas = _context.RetornarLista<Mesa>("sp_consultarMesa", parametros);
+            List<Veiculo> veiculos = _context.RetornarLista<Veiculo>("sp_consultarVeiculo", parametros);
             
-            ViewBagRestaurantes();
-            return View(mesas.ToPagedList(numeroPagina, itensPorPagina));
+            ViewBagEstabelecimentos();
+            return View(veiculos.ToPagedList(numeroPagina, itensPorPagina));
         }
 
         public IActionResult Detalhe(int id)
         {
-            Models.Mesa mesa = new Models.Mesa();
+            Models.Veiculo veiculo = new Models.Veiculo();
             if (id > 0)  {
                 MySqlParameter[] parametros = new MySqlParameter[]{
                 new MySqlParameter("identificacao", id)
             };
-                mesa = _context.ListarObjeto<Mesa>("sp_buscarMesaPorId", parametros); 
+                veiculo = _context.ListarObjeto<Veiculo>("sp_buscarVeiculoPorId", parametros); 
             }
 
-            ViewBagRestaurantes();
-            return View(mesa);
+            ViewBagEstabelecimentos();
+            ViewBagTiposVeiculos();
+            return View(veiculo);
         }
 
 
 
         [HttpPost]
-        public IActionResult Detalhe(Models.Mesa mesa){
-            if(string.IsNullOrEmpty(mesa.Localizacao)){
-                ModelState.AddModelError("", "A localização da mesa deve ser preenchida");
-            }
+        public IActionResult Detalhe(Models.Veiculo veiculo){
+            
             
 
             if(ModelState.IsValid){
            
                 List<MySqlParameter> parametros = new List<MySqlParameter>(){
                     
-                    new MySqlParameter("localizacao", mesa.Localizacao),
-                    new MySqlParameter("idrestaurante", mesa.IdRestaurante),
-                    new MySqlParameter("numerodamesa", mesa.NumeroDaMesa)                  
+                    new MySqlParameter("IdTipoVeiculo", veiculo.IdTipoVeiculo),
+                    new MySqlParameter("Marca", veiculo.Marca),
+                    new MySqlParameter("Modelo", veiculo.Modelo),
+                    new MySqlParameter("Placa", veiculo.Placa) ,
+                    new MySqlParameter("Cor", veiculo.Cor)                
                 };
-                if (mesa.Id > 0){
-                    parametros.Add(new MySqlParameter("identificacao", mesa.Id));
+                if (veiculo.Id > 0){
+                    parametros.Add(new MySqlParameter("identificacao", veiculo.Id));
                 }
-                var retorno = _context.ListarObjeto<RetornoProcedure>(mesa.Id > 0? "sp_atualizarMesa" : "sp_inserirMesa", parametros.ToArray());
+                var retorno = _context.ListarObjeto<RetornoProcedure>(veiculo.Id > 0? "sp_atualizarVeiculo" : "sp_inserirVeiculo", parametros.ToArray());
             
                 if (retorno.Mensagem == "Ok"){
                     return RedirectToAction("Index");
@@ -75,45 +84,53 @@ namespace Estacionamento.Controllers
                 }
             }
 
-            ViewBagRestaurantes();
-            return View(mesa);
+            ViewBagEstabelecimentos();
+            ViewBagTiposVeiculos();
+            return View(veiculo);
         }
 
         public JsonResult Excluir(int id){
             MySqlParameter[] parametros = new MySqlParameter[]{
                 new MySqlParameter("identificacao", id)
             };
-            var retorno = _context.ListarObjeto<RetornoProcedure>("sp_excluirMesa", parametros);
+            var retorno = _context.ListarObjeto<RetornoProcedure>("sp_excluirVeiculo", parametros);
             return new JsonResult(new {Sucesso = retorno.Mensagem == "Excluído", Mensagem = retorno.Mensagem });
         }
 
-        public PartialViewResult ListaPartialView(string localizacao, int idrestaurante){
+        public PartialViewResult ListaPartialView(int idTipoVeiculo){
             
             MySqlParameter[] parametros = new MySqlParameter[]{
-                new MySqlParameter("_localizacao", localizacao),
-                new MySqlParameter("_idRestaurante", idrestaurante)
+                new MySqlParameter("_IdTipoVeiculo", idTipoVeiculo)
                 
             };
-            List<Mesa> mesas = _context.RetornarLista<Mesa>("sp_consultarMesa", parametros);
-            if (string.IsNullOrEmpty(localizacao)){
-                HttpContext.Session.Remove("TextoPesquisa");
-            } else {
-            HttpContext.Session.SetString("TextoPesquisa", localizacao);
-            }
+            List<Veiculo> veiculos = _context.RetornarLista<Veiculo>("sp_consultarVeiculo", parametros);
             
-            HttpContext.Session.SetInt32("IdRestaurante", idrestaurante);
             
-            return PartialView(mesas.ToPagedList(1, itensPorPagina));
+            HttpContext.Session.SetInt32("IdTipoVeiculo", idTipoVeiculo);
+            
+            return PartialView(veiculos.ToPagedList(1, itensPorPagina));
         }
 
-        private void ViewBagRestaurantes(){
+        private void ViewBagTiposVeiculos(){
+            MySqlParameter[] param = new MySqlParameter[]{
+                new MySqlParameter("_tipo", "")
+            };
+            List<Models.TipoVeiculo> tiposveiculos = new List<Models.TipoVeiculo>(); 
+            tiposveiculos = _context.RetornarLista<Models.TipoVeiculo>("sp_consultarTipoVeiculo", param);
+            
+            ViewBag.TiposVeiculos = tiposveiculos.Select(c => new SelectListItem(){
+                Text= c.Tipo, Value= c.Id.ToString()
+            }).ToList();
+        }
+
+        private void ViewBagEstabelecimentos(){
             MySqlParameter[] param = new MySqlParameter[]{
                 new MySqlParameter("_nome", "")
             };
-            List<Models.Restaurante> restaurantes = new List<Models.Restaurante>(); 
-            restaurantes = _context.RetornarLista<Models.Restaurante>("sp_consultarRestaurante", param);
+            List<Models.Estabelecimento> estabelecimentos = new List<Models.Estabelecimento>(); 
+            estabelecimentos = _context.RetornarLista<Models.Estabelecimento>("sp_consultarEstabelecimento", param);
             
-            ViewBag.Restaurantes = restaurantes.Select(c => new SelectListItem(){
+            ViewBag.Estabelecimentos = estabelecimentos.Select(c => new SelectListItem(){
                 Text= c.Nome, Value= c.Id.ToString()
             }).ToList();
         }
