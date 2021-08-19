@@ -28,7 +28,7 @@
             <a class="nav-link active" data-target="#cadastro" data-toggle="tab">Estabelecimento</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-target="#itens" data-toggle="tab">Estabelecimento Tipo Veículo</a>
+            <a class="nav-link" data-target="#itens" data-toggle="tab">Tipo de Veículo</a>
         </li>
     </ul>
 
@@ -105,7 +105,7 @@
         </div>
 
         <div class="tab-pane" id="itens">
-            <div id="divItem">
+            <div id="divItem" hidden>
                 <form class="form p-5"
                     style="border: 3px solid grey; background: #E6E6E6; border-radius: 15px; margin-top: 30px;">
                     <div class="text- danger" id="divErroItem"></div>
@@ -146,38 +146,22 @@
 
     window.onload = function () {
         PesquisarEstabelecimentos();
-
-    }
-
-    function Voltar() {
-        window.location.href = "https://localhost:5001/Estabelecimento";
-    }
-     
-    function Adicionar() {
-        $('#divItem').prop('hidden', false);
-        Limpar();
-    }
-
-    function Limpar(){
-        $('#IdEstabelecimentoTipoVeiculo').val('');
-        $('#IdTipoVeiculo').val('');
-        $('#Valor').val('');
-    }
-
-    function Cancelar(){
-        Limpar();    
     }
 
     function PesquisarEstabelecimentos() {
         var result = $('#Id').val(); 
         var url = '/EstabelecimentoTipoVeiculo/ListaPartialView';
-        var parametros = { idEstabelecimento: result };
+        var parametros = { idEstabelecimento : result };
         $.get(url, parametros) 
             .done(function (data) {
                 $('#divpartialitens').html(data);  
             });
     }
 
+    function Adicionar() {
+        $('#divItem').prop('hidden', false);
+        Limpar();
+    }
 
     function SalvarEstabelecimentoTipoVeiculo() {
         var idEstabelecimentoTipoVeiculo = $('#IdEstabelecimentoTipoVeiculo').val();
@@ -191,11 +175,12 @@
         }
 
         var url = '/EstabelecimentoTipoVeiculo/Salvar';
-        var parametros = { IdEstabelecimento : idEstabelecimento,  Id : idEstabelecimentoTipoVeiculo, 
+        var parametros = { Id : idEstabelecimentoTipoVeiculo,  IdEstabelecimento : idEstabelecimento, 
         IdTipoVeiculo: idTipoVeiculo, Valor : valor }; 
         $.post(url, parametros)
             .done(function (data) {
                 if (data.sucesso) {
+                    $('#divItem').prop('hidden', true);
                     PesquisarEstabelecimentos();
                     Limpar();
                 } else {
@@ -210,14 +195,25 @@
         $.get(url, parametros)
             .done(function (data) {
                 if (data.sucesso) {
+                    $('#divItem').prop('hidden', false);
                     $('#IdEstabelecimentoTipoVeiculo').val(data.estabelecimentotipoveiculo.id);
-                    $('#IdEstabelecimento').val(data.estabelecimentotipoveiculo.idEstabelecimento);
                     $('#IdTipoVeiculo').val(data.estabelecimentotipoveiculo.idTipoVeiculo);
                     $('#Valor').val(data.estabelecimentotipoveiculo.valor);
                 } else {
                     alert('Não encontrado');
                 }
             });
+    }
+
+    function Limpar(){
+        $('#IdEstabelecimentoTipoVeiculo').val('');
+        $('#IdTipoVeiculo').val('');
+        $('#Valor').val('');
+    }
+
+    function Cancelar(){
+        $('#divItem').prop('hidden', true);
+        Limpar();    
     }
 
     function Excluir(id) {
@@ -237,5 +233,9 @@
                 });
         }
     }
-    
+
+    function Voltar() {
+        window.location.href = "https://localhost:5001/Estabelecimento";
+    }
+      
 </script>

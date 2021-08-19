@@ -1,0 +1,64 @@
+@model Veiculo
+@{
+    ViewData["Title"] = "Adicionar um novo Veículo";
+}
+
+
+<div class="text-center">
+    <h4>@if (Model.Id > 0)
+        {
+            @Html.Raw("Editar Veículo");
+        } else {
+            @Html.Raw("Incluir Veículo");
+        }
+    </h4>
+</div>
+
+<form method="POST" asp-action="Detalhe" asp-controller="Veiculo" class="form p-5"
+    style="border: 3px solid grey; background: #E6E6E6; border-radius: 15px; margin-top: 30px;">
+    <div class="text-danger">@Html.ValidationSummary()</div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <input asp-for="Id" type="hidden" class="form-control">
+            <label class="form-label">Tipo de Veículo</label>
+            <select asp-for="IdTipoVeiculo" asp-items="@ViewBag.TiposVeiculos" class="form-control">
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Marca</label>
+            <input asp-for="Marca" type="text" class="form-control">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label class="form-label">Modelo</label>
+            <input asp-for="Modelo" type="text" class="form-control" >
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Placa</label>
+            <input asp-for="Placa" type="text" class="form-control" >
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label class="form-label">Cor</label>
+            <input asp-for="Cor" type="text" class="form-control" >
+        </div>
+    </div>
+
+
+    
+    <input type="submit" value="Salvar" class="btn btn-success" 
+        style="margin-top: 30px; margin-bottom: 15px;">
+    <input type="button" value="Voltar" class="btn btn-success" onclick="Voltar()"
+        style="margin-top: 30px; margin-bottom: 15px;"></td>
+</form>
+
+<script>
+    function Voltar(){
+        window.location.href = "https://localhost:5001/Veiculo";
+    }
+</script>

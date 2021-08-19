@@ -1,40 +1,40 @@
 @using Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-@model X.PagedList.IPagedList<EstabelecimentoTipoVeiculo>
+@model X.PagedList.IPagedList<Veiculo>
 @{
-    ViewData["Title"] = "Cadastro de Tipo de Veículo";
+    ViewData["Title"] = "Cadastro de Veículos";
 }
 
 @section Scripts{
 
 }
 <div class="text-center">
-    <h4>Cadastro de Tipo de Veículo</h4>
+    <h4>Cadastro de Veículos</h4>
+    <select id="idTipoVeiculo" asp-items="@ViewBag.TiposVeiculos" class="form-control" onchange="Pesquisar()"></select>
     <input type="text" id="textopesquisa" class="form-control" onkeyup="VerificarDigitacao(event)" value="@HttpContextAccessor.HttpContext.Session.GetString("TextoPesquisa")" >
     <input type="button" value="Limpar" onclick="Limpar()" class="btn btn-primary">
     <input type="button" value="Pesquisar" onclick="Pesquisar()" class="btn btn-primary">
-    <a asp-area="" asp-controller="EstabelecimentoTipoVeiculo" asp-action="Detalhe"><input type="button" value="Novo"
+    <a asp-area="" asp-controller="Veiculo" asp-action="Detalhe"><input type="button" value="Novo"
             class="btn btn-primary" style="margin-top: 30px; margin-bottom: 30px;"></a>
     <div id="divpartial">
-        <partial name="~/Views/EstabelecimentoTipoVeiculo/ListaPartialView.cshtml" />
+        <partial name="~/Views/Veiculo/ListaPartialView.cshtml" />
     </div>
 </div>
 
 <script>
-
     function Limpar() {
         $('#textopesquisa').val(''); 
         Pesquisar();
     }
 
     function Pesquisar() {
-        //var result = document.getElementById("textopesquisa").value;
         var result = $('#textopesquisa').val(); 
-        var url = "/EstabelecimentoTipoVeiculo/ListaPartialView";
-        var parametros = { idEstabelecimento: result};
+        var url = "/Veiculo/ListaPartialView";
+        var parametros = { IdTipoVeiculo: result };
         $.get(url, parametros) 
             .done(function (data) {
                 $('#divpartial').html(data);  
+            });
     }
 
     function VerificarDigitacao(e) {
@@ -45,7 +45,18 @@
     }
 
     function Excluir(id) {
-        alert("Solicitação negada! A mesa só pode ser excluída através do pedido");
+        var result = confirm("Tem certeza que quer excluir?");
+        if (result) {
+            var url = "/Veiculo/Excluir";
+            var parametros = { id: id };
+            $.get(url, parametros) 
+                .done(function (data) { 
+                    if (data.sucesso) { 
+                        document.location.reload(true);
+                    } else {
+                        alert(data.mensagem);
+                    }
+                });
+        }
     }
-    
 </script>
