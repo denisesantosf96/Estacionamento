@@ -54,7 +54,7 @@ namespace Estacionamento.Controllers
 
             return new JsonResult(new {Sucesso = estabelecimentoveiculo.Id > 0, EstabelecimentoTipoVeiculo = estabelecimentoveiculo});
             }
-            catch(Exception erro){
+            catch(Exception){
                 return new JsonResult(new {Sucesso = false});
             }
             

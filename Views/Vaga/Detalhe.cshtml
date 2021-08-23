@@ -1,0 +1,51 @@
+@model Vaga
+@{
+    ViewData["Title"] = "Adicionar uma nova Vaga";
+}
+
+
+<div class="text-center">
+    <h4>@if (Model.Id > 0)
+        {
+            @Html.Raw("Editar Vaga");
+        } else {
+            @Html.Raw("Incluir Vaga");
+        }
+    </h4>
+</div>
+
+<form method="POST" asp-action="Detalhe" asp-controller="Vaga" class="form p-5"
+    style="border: 3px solid grey; background: #E6E6E6; border-radius: 15px; margin-top: 30px;">
+    <div class="text-danger">@Html.ValidationSummary()</div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <input asp-for="Id" type="hidden" class="form-control">
+            <label class="form-label">Estabelecimento</label>
+            <select asp-for="IdEstabelecimento" asp-items="@ViewBag.Estabelecimentos" class="form-control">
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Localização</label>
+            <input asp-for="Localizacao" type="text" class="form-control">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label class="form-label">Status</label>
+            <input asp-for="Status" type="text" class="form-control" >
+        </div>
+    </div>
+    
+    <input type="submit" value="Salvar" class="btn btn-success" 
+        style="margin-top: 30px; margin-bottom: 15px;">
+    <input type="button" value="Voltar" class="btn btn-success" onclick="Voltar()"
+        style="margin-top: 30px; margin-bottom: 15px;"></td>
+</form>
+
+<script>
+    function Voltar(){
+        window.location.href = "https://localhost:5001/Vaga";
+    }
+</script>
