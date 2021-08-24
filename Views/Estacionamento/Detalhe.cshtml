@@ -1,0 +1,95 @@
+@model Estacionamento
+@{
+    ViewData["Title"] = "Adicionar um novo Estacionamento";
+}
+
+
+<div class="text-center">
+    <h4>@if (Model.Id > 0)
+        {
+            @Html.Raw("Editar Estacionamento");
+        } else {
+            @Html.Raw("Incluir Estacionamento");
+        }
+    </h4>
+</div>
+
+<form method="POST" asp-action="Detalhe" asp-controller="Estacionamento" class="form p-5"
+    style="border: 3px solid grey; background: #E6E6E6; border-radius: 15px; margin-top: 30px;">
+    <div class="text-danger">@Html.ValidationSummary()</div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <input asp-for="Id" type="hidden" class="form-control">
+            <label for="inputNome" class="form-label">Veículo</label>
+             <select asp-items="@ViewBag.Veiculos" asp-for="IdVeiculo" class="form-control"></select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="inputCpf" class="form-label">Vaga</label>
+             <select asp-items="@ViewBag.Vagas" asp-for="IdVaga" class="form-control"></select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label for="inputRg" class="form-label">Manobrista</label>
+             <select asp-items="@ViewBag.Manobristas" asp-for="IdManobrista" class="form-control"></select>
+        </div>
+        <div class="col-md-6">
+            <label for="inputTelefone" class="form-label">Cliente</label>
+             <select asp-items="@ViewBag.Clientes" asp-for="IdCliente" class="form-control"></select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label class="form-label">Data</label>
+            <input asp-for="Data" type="datetime-local" class="form-control">
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Situação</label>
+            <select asp-for="Situacao" class="form-control"> 
+                <option>Aberto</option>
+                <option>Cancelado</option>
+                <option>Pago</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label class="form-label">Forma de Pagamento</label>
+            <select asp-for="FormaPagamento" class="form-control">
+                <option>Cartão de Crédito</option>
+                <option>Cartão de Débito</option>
+                <option>Cheque</option>
+                <option>Dinheiro</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Valor Total</label>
+            <input asp-for="ValorTotal" type="text" class="form-control">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label class="form-label">Data do Pagamento</label>
+            <input asp-for="DataPagamento" type="text" class="form-control">
+        </div>
+    </div>
+
+    <input type="submit" value="Salvar" class="btn btn-success" 
+        style="margin-top: 30px; margin-bottom: 15px;">
+    <input type="button" value="Voltar" class="btn btn-success" onclick="Voltar()" 
+        style="margin-top: 30px; margin-bottom: 15px;"></td>
+</form>
+
+<script>
+
+    function Voltar(){
+        window.location.href = "https://localhost:5001/Estacionamento";
+    }
+
+</script>
