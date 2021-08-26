@@ -14,10 +14,13 @@ namespace Estacionamento.Models
         public string FormaPagamento { get; set; }
         public decimal ValorTotal { get; set; }
         public DateTime DataPagamento { get; set; }
-        public string Nome { get; set; }
         public int IdEstabelecimento { get; set; }
-        public string Status { get; set; }
+        public string Nome { get; set; }
+        public string NomeManobrista { get; set; }
         public string Modelo { get; set; }
-        public string Placa { get; set; }
+        public string  Placa { get; set; }
+        public string Status { get; set; }
+        public string Localizacao { get; set; }
+        public int IdTipoVeiculo { get; set; }
     }
 }

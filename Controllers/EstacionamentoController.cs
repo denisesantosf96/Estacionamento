@@ -24,19 +24,16 @@ namespace Estacionamento.Controllers
         }
         
         public IActionResult Index(int? pagina)
-        {
-            
+        {   
             var idEstabelecimento = 1;
-            var situacao = HttpContext.Session.GetString("TextoPesquisa");          
-            int numeroPagina = (pagina ?? 1);
-            
+            var situacao = HttpContext.Session.GetString("situacao");          
+            int numeroPagina = (pagina ?? 1); 
 
             MySqlParameter[] parametros = new MySqlParameter[]{
                 new MySqlParameter("_IdEstabelecimento", idEstabelecimento),
                 new MySqlParameter("_situacao", situacao)
-                
             };
-            List<Estacionamento.Models.Estacionamento> estacionamentos = _context.RetornarLista<Models.Estacionamento>("sp_consultarEstacionamento", parametros);
+            List<Estacionamento.Models.Estacionamento> estacionamentos = _context.RetornarLista<Estacionamento.Models.Estacionamento>("sp_consultarEstacionamento", parametros);
             
             ViewBagEstabelecimentos();
             return View(estacionamentos.ToPagedList(numeroPagina, itensPorPagina));
@@ -54,33 +51,27 @@ namespace Estacionamento.Controllers
                 estacionamento.IdEstabelecimento = idestabelecimento;
                 estacionamento.Data = DateTime.Now;
             }
-
+     
+            ViewBagTiposVeiculos();
             ViewBagEstabelecimentos();
-            ViewBagClientes();
-            ViewBagManobristas();
-            ViewBagVagas(id > 0 ? estacionamento.IdEstabelecimento : idestabelecimento);
-            ViewBagVeiculos();
             return View(estacionamento);
         }
 
-
-
         [HttpPost]
         public IActionResult Detalhe(Models.Estacionamento estacionamento){
-            
             if(ModelState.IsValid){
            
                 List<MySqlParameter> parametros = new List<MySqlParameter>(){
-                    
                     new MySqlParameter("IdVeiculo", estacionamento.IdVeiculo),
                     new MySqlParameter("IdVaga", estacionamento.IdVaga),
                     new MySqlParameter("IdManobrista", estacionamento.IdManobrista),
-                    new MySqlParameter("IdCliente", estacionamento.IdCliente), 
-                    new MySqlParameter("Data", estacionamento.Data),   
+                    new MySqlParameter("IdCliente", estacionamento.IdCliente),
+                    new MySqlParameter("Data", estacionamento.Data),
                     new MySqlParameter("Situacao", estacionamento.Situacao),
-                    new MySqlParameter("FormaPagamento", estacionamento.FormaPagamento),  
-                    new MySqlParameter("ValorTotal", estacionamento.ValorTotal), 
-                    new MySqlParameter("DataPagamento", estacionamento.DataPagamento)        
+                    new MySqlParameter("FormaPagamento", estacionamento.FormaPagamento),
+                    new MySqlParameter("ValorTotal", estacionamento.ValorTotal),
+                    new MySqlParameter("DataPagamento", estacionamento.DataPagamento)
+
                 };
                 if (estacionamento.Id > 0){
                     parametros.Add(new MySqlParameter("identificacao", estacionamento.Id));
@@ -95,10 +86,7 @@ namespace Estacionamento.Controllers
                 }
             }
 
-            ViewBagClientes();
-            ViewBagManobristas();
-            ViewBagVagas(estacionamento.IdEstabelecimento);
-            ViewBagVeiculos();
+            ViewBagTiposVeiculos();
             ViewBagEstabelecimentos();
             return View(estacionamento);
         }
@@ -111,22 +99,20 @@ namespace Estacionamento.Controllers
             return new JsonResult(new {Sucesso = retorno.Mensagem == "Excluído", Mensagem = retorno.Mensagem });
         }
 
-        public PartialViewResult ListaPartialView(int idEstabelecimento, string situacao){
-            
+        public PartialViewResult ListaPartialView(string situacao, int idestabelecimento){
             MySqlParameter[] parametros = new MySqlParameter[]{
-                new MySqlParameter("_IdEstabelecimento", idEstabelecimento),
+                new MySqlParameter("_IdEstabelecimento", idestabelecimento),
                 new MySqlParameter("_situacao", situacao)
-                
             };
-            List<Estacionamento.Models.Estacionamento> estacionamentos = _context.RetornarLista<Models.Estacionamento>("sp_consultarEstacionamento", parametros);
+            List<Models.Estacionamento> estacionamentos = _context.RetornarLista<Models.Estacionamento>("sp_consultarEstacionamento", parametros);
             if (string.IsNullOrEmpty(situacao)){
                 HttpContext.Session.Remove("TextoPesquisa");
             } else {
             HttpContext.Session.SetString("TextoPesquisa", situacao);
             }
-            
-            HttpContext.Session.SetInt32("IdEstabelecimento", idEstabelecimento);
-            
+
+            HttpContext.Session.SetInt32("IdEstabelecimento", idestabelecimento);
+
             return PartialView(estacionamentos.ToPagedList(1, itensPorPagina));
         }
 
@@ -141,54 +127,17 @@ namespace Estacionamento.Controllers
                 Text= c.Nome, Value= c.Id.ToString()
             }).ToList();
         }
-
-        private void ViewBagClientes(){
+        private void ViewBagTiposVeiculos(){
             MySqlParameter[] param = new MySqlParameter[]{
-                new MySqlParameter("_nome", "")
+                new MySqlParameter("_tipo", "")
             };
-            List<Models.Cliente> clientes = new List<Models.Cliente>(); 
-            clientes = _context.RetornarLista<Models.Cliente>("sp_consultarCliente", param);
+            List<Models.TipoVeiculo> tiposveiculos = new List<Models.TipoVeiculo>(); 
+            tiposveiculos = _context.RetornarLista<Models.TipoVeiculo>("sp_consultarTipoVeiculo", param);
             
-            ViewBag.Clientes = clientes.Select(c => new SelectListItem(){
-                Text= c.Nome, Value= c.Id.ToString()
+            ViewBag.TiposVeiculos = tiposveiculos.Select(c => new SelectListItem(){
+                Text= c.Tipo, Value= c.Id.ToString()
             }).ToList();
         }
-
-        private void ViewBagManobristas(){
-            MySqlParameter[] param = new MySqlParameter[]{
-                new MySqlParameter("_nome", "")
-            };
-            List<Models.Manobrista> manobristas = new List<Models.Manobrista>(); 
-            manobristas = _context.RetornarLista<Models.Manobrista>("sp_consultarManobrista", param);
-            
-            ViewBag.Manobristas = manobristas.Select(c => new SelectListItem(){
-                Text= c.Nome, Value= c.Id.ToString()
-            }).ToList();
-        }
-
-        private void ViewBagVagas(int idestabelecimento){
-            MySqlParameter[] param = new MySqlParameter[]{
-                new MySqlParameter("_IdEstabelecimento", idestabelecimento),
-                new MySqlParameter("_status", "")
-            };
-            List<Models.Vaga> vagas = new List<Models.Vaga>(); 
-            vagas = _context.RetornarLista<Models.Vaga>("sp_consultarVaga", param);
-            
-            ViewBag.Vagas = vagas.Select(c => new SelectListItem(){
-                Text= c.Localizacao +" - "+ c.Status, Value= c.Id.ToString()
-            }).ToList();
-        }
-
-        private void ViewBagVeiculos(){
-            MySqlParameter[] param = new MySqlParameter[]{
-                new MySqlParameter("_IdTipoVeiculo", "")
-            };
-            List<Models.Veiculo> veiculos = new List<Models.Veiculo>(); 
-            veiculos = _context.RetornarLista<Models.Veiculo>("sp_consultarVeiculo", param);
-            
-            ViewBag.Veiculos = veiculos.Select(c => new SelectListItem(){
-                Text= c.Marca +" - "+ c.Placa, Value= c.Id.ToString()
-            }).ToList();
-        }
+        
     }
 }

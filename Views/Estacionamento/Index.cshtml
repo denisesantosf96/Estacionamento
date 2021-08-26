@@ -8,9 +8,10 @@
 @section Scripts{
 
 }
+
 <div class="text-center">
     <h4>Cadastro de Estacionamentos</h4>
-    <select id="situacao"  class="form-control" onchange="Pesquisar()" value="@HttpContextAccessor.HttpContext.Session.GetString("status")">
+    <select id="situacao"  class="form-control" onchange="Pesquisar()" value="@HttpContextAccessor.HttpContext.Session.GetString("situacao")">
     <option value="">Mostrar Todos</option>
     <option>Aberto</option>
     <option>Cancelado</option>
@@ -20,24 +21,29 @@
     <input type="text" id="textopesquisa" class="form-control" onkeyup="VerificarDigitacao(event)" value="@HttpContextAccessor.HttpContext.Session.GetString("TextoPesquisa")">
     <input type="button" value="Limpar" onclick="Limpar()" class="btn btn-primary">
     <input type="button" value="Pesquisar" onclick="Pesquisar()" class="btn btn-primary">
-    <a asp-area="" asp-controller="Cliente" asp-action="Detalhe"><input type="button" value="Novo"
-            class="btn btn-primary" style="margin-top: 30px; margin-bottom: 30px;"></a>
+    <input type="button" value="Novo" onclick="Redirecionar()" class="btn btn-primary" style="margin-top: 30px; margin-bottom: 30px;">
     <div id="divpartial">
         <partial name="~/Views/Estacionamento/ListaPartialView.cshtml" />
     </div>
 </div>
 
 <script>
+
+    function Redirecionar() {
+        var estabelecimento = $('#idEstabelecimento').val(); 
+        window.location = "Estacionamento/Detalhe?idestabelecimento="+estabelecimento 
+    }
+
     function Limpar() {
-        $('#textopesquisa').val(''); 
-        $('#idEstabelecimento').val('');
+        $('#textopesquisa').val('');
         Pesquisar();
     }
 
     function Pesquisar() {
-        var result = $('#textopesquisa').val(); 
+        //var result = $('#textopesquisa').val(); 
+        var idEstabelecimento = $('#idEstabelecimento').val();
         var url = "/Estacionamento/ListaPartialView";
-        var parametros = { situacao : result };
+        var parametros = { situacao : $('#situacao').val(), idEstabelecimento : idEstabelecimento };
         $.get(url, parametros) 
             .done(function (data) {
                 $('#divpartial').html(data);  
@@ -58,11 +64,13 @@
             var parametros = { id: id };
             $.get(url, parametros) 
                 .done(function (data) { 
+
                     if (data.sucesso) { 
                         document.location.reload(true);
                     } else {
                         alert(data.mensagem);
                     }
+
                 });
         }
     }

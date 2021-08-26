@@ -3,6 +3,9 @@
     ViewData["Title"] = "Adicionar um novo Estacionamento";
 }
 
+@section Scripts{
+
+}
 
 <div class="text-center">
     <h4>@if (Model.Id > 0)
@@ -14,31 +17,35 @@
     </h4>
 </div>
 
+
 <form method="POST" asp-action="Detalhe" asp-controller="Estacionamento" class="form p-5"
     style="border: 3px solid grey; background: #E6E6E6; border-radius: 15px; margin-top: 30px;">
     <div class="text-danger">@Html.ValidationSummary()</div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-3">
             <input asp-for="Id" type="hidden" class="form-control">
-            <label for="inputNome" class="form-label">Veículo</label>
-             <select asp-items="@ViewBag.Veiculos" asp-for="IdVeiculo" class="form-control"></select>
+            <label class="form-label">Tipo de Veículo</label>
+            <select asp-items="@ViewBag.TiposVeiculos" asp-for="IdTipoVeiculo" class="form-control"></select>
         </div>
-
-        <div class="col-md-6">
-            <label for="inputCpf" class="form-label">Vaga</label>
-             <select asp-items="@ViewBag.Vagas" asp-for="IdVaga" class="form-control"></select>
+        <div class="col-md-3">
+            <label class="form-label">Veiculo</label>
+            <input asp-for="IdVeiculo" type="text" class="form-control">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Vaga</label>
+            <input asp-for="IdVaga" type="text" class="form-control">
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-6">
-            <label for="inputRg" class="form-label">Manobrista</label>
-             <select asp-items="@ViewBag.Manobristas" asp-for="IdManobrista" class="form-control"></select>
+            <label class="form-label">Manobrista</label>
+            <input asp-for="NomeManobrista" type="text" class="form-control">
         </div>
         <div class="col-md-6">
-            <label for="inputTelefone" class="form-label">Cliente</label>
-             <select asp-items="@ViewBag.Clientes" asp-for="IdCliente" class="form-control"></select>
+            <label class="form-label">Cliente</label>
+            <input asp-for="Nome" type="text" class="form-control">
         </div>
     </div>
 
@@ -60,12 +67,12 @@
     <div class="row">
         <div class="col-md-6">
             <label class="form-label">Forma de Pagamento</label>
-            <select asp-for="FormaPagamento" class="form-control">
-                <option>Cartão de Crédito</option>
-                <option>Cartão de Débito</option>
-                <option>Cheque</option>
-                <option>Dinheiro</option>
-            </select>
+                <select asp-for="FormaPagamento" class="form-control">
+                    <option>Cartão de Crédito</option>
+                    <option>Cartão de Débito</option>
+                    <option>Cheque</option>
+                    <option>Dinheiro</option>
+                </select>
         </div>
         <div class="col-md-6">
             <label class="form-label">Valor Total</label>
@@ -85,6 +92,8 @@
     <input type="button" value="Voltar" class="btn btn-success" onclick="Voltar()" 
         style="margin-top: 30px; margin-bottom: 15px;"></td>
 </form>
+
+
 
 <script>
 

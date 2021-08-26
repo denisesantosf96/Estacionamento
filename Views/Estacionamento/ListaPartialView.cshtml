@@ -6,28 +6,28 @@
         <thead class="thead-dark">
         <tr>
             <th>Id</th>
-            <th>Nome</th>
+            <th>Veículo</th>
 
-            <th>Modelo</th>
-            <th>Placa</th>
+            <th>Vaga</th>
+            <th>Manobrista</th>
 
-            <th>Status</th>
+            <th>Cliente</th>
             <th>Valor</th>
-            
+
             <th></th>
         </tr>
         </thead>
         <tbody>
             @for (int i = 0; i < Model.Count; i++)
             {
-                <tr>
+            <tr>
             <td>@Model[i].Id</td>
-            <td>@Model[i].IdCliente</td>
-            <td>@Model[i].Modelo</td>
-            <td>@Model[i].Placa</td>
-            <td>@Model[i].Status</td>
+            <td>@Model[i].Modelo - @Model[i].Placa</td>
+            <td>@Model[i].Localizacao - @Model[i].Status</td>
+            <td>@Model[i].NomeManobrista</td>
+            <td>@Model[i].Nome</td>
             <td>@Model[i].ValorTotal</td>
-            <td><input type="button" value="Editar" class="btn btn-dark" onclick="javascript:window.location=`/Cliente/Detalhe/${@Model[i].Id}`">
+            <td><input type="button" value="Editar" class="btn btn-dark" onclick="javascript:window.location=`/Estacionamento/Detalhe/${@Model[i].Id}`">
             <input type="button" value="Excluir" class="btn btn-danger" onclick="Excluir(@Model[i].Id)"></td>
             
             </tr>
