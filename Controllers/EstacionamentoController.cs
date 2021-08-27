@@ -49,7 +49,6 @@ namespace Estacionamento.Controllers
                 estacionamento = _context.ListarObjeto<Models.Estacionamento>("sp_buscarEstacionamentoPorId", parametros); 
             } else {
                 estacionamento.IdEstabelecimento = idestabelecimento;
-                estacionamento.Data = DateTime.Now;
             }
      
             ViewBagTiposVeiculos();
@@ -106,9 +105,9 @@ namespace Estacionamento.Controllers
             };
             List<Models.Estacionamento> estacionamentos = _context.RetornarLista<Models.Estacionamento>("sp_consultarEstacionamento", parametros);
             if (string.IsNullOrEmpty(situacao)){
-                HttpContext.Session.Remove("TextoPesquisa");
+                HttpContext.Session.Remove("situacao");
             } else {
-            HttpContext.Session.SetString("TextoPesquisa", situacao);
+            HttpContext.Session.SetString("situacao", situacao);
             }
 
             HttpContext.Session.SetInt32("IdEstabelecimento", idestabelecimento);
@@ -138,6 +137,6 @@ namespace Estacionamento.Controllers
                 Text= c.Tipo, Value= c.Id.ToString()
             }).ToList();
         }
-        
+                
     }
 }
