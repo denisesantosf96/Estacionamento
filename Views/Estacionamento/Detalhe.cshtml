@@ -23,43 +23,12 @@
     <div class="text-danger">@Html.ValidationSummary()</div>
 
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <input asp-for="Id" type="hidden">
-            <label class="form-label">Tipo de Veículo</label>
-            <select asp-items="@ViewBag.TiposVeiculos" asp-for="IdTipoVeiculo" class="form-control"></select>
-        </div>
-        <div class="col-md-3">
-            <label class="form-label">Veiculo</label>
-            <input asp-for="IdVeiculo" type="text" class="form-control">
-        </div>
-        <div class="col-md-3">
-            <label class="form-label">Vaga</label>
-            <input asp-for="IdVaga" type="text" class="form-control">
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
-            <label class="form-label">Manobrista</label>
-            <input asp-for="NomeManobrista" type="text" class="form-control">
-        </div>
-        <div class="col-md-3">
-            <label class="form-label">CPF</label>
-            <input asp-for="CPF" type="text" class="form-control">
-        </div>
-        <div class="col-md-3">
-        <input asp-for="IdCliente" type="hidden">
-            <label class="form-label">Cliente</label>
-            <input asp-for="Nome" type="text" class="form-control">
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
             <label class="form-label">Data</label>
             <input asp-for="Data" type="datetime-local" class="form-control">
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <label class="form-label">Situação</label>
             <select asp-for="Situacao" class="form-control"> 
                 <option>Aberto</option>
@@ -67,10 +36,62 @@
                 <option>Pago</option>
             </select>
         </div>
+        <div class="col-md-4">
+            <label class="form-label">Vaga</label>
+            <select asp-items="@ViewBag.Vagas" asp-for="IdVaga" class="form-control"></select>
+        </div>
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-3">
+            <label class="form-label">Placa</label>
+            <input asp-for="Placa" type="text" class="form-control">
+        </div>
+        <div class="col-md-3">
+            <input asp-for="IdTipoVeiculo" type="hidden">
+            <label class="form-label">Tipo de Veículo</label>
+            <select asp-items="@ViewBag.TiposVeiculos" asp-for="IdTipoVeiculo" class="form-control"></select>
+        </div>
+        <div class="col-md-3">
+            <input asp-for="IdVeiculo" type="hidden">
+            <label class="form-label">Marca</label>
+            <input asp-for="Marca" type="text" class="form-control">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Modelo</label>
+            <input asp-for="Modelo" type="text" class="form-control">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <label class="form-label">Cor</label>
+            <input asp-for="Cor" type="text" class="form-control">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <label class="form-label">CPF</label>
+            <input asp-for="CPF" type="text" class="form-control" maxlength="14" autocomplete>
+        </div>
+        <div class="col-md-4">
+            <input asp-for="IdCliente" type="hidden">
+            <label class="form-label">Cliente</label>
+            <input asp-for="Nome" type="text" class="form-control">
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Manobrista</label>
+            <select asp-items="@ViewBag.Manobristas" asp-for="IdManobrista" class="form-control"></select>
+        </div>  
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <label class="form-label">Valor Total</label>
+            <input asp-for="ValorTotal" type="text" class="form-control">
+        </div>
+        <div class="col-md-4">
             <label class="form-label">Forma de Pagamento</label>
                 <select asp-for="FormaPagamento" class="form-control">
                     <option>Cartão de Crédito</option>
@@ -79,17 +100,11 @@
                     <option>Dinheiro</option>
                 </select>
         </div>
-        <div class="col-md-6">
-            <label class="form-label">Valor Total</label>
-            <input asp-for="ValorTotal" type="text" class="form-control">
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <label class="form-label">Data do Pagamento</label>
             <input asp-for="DataPagamento" type="text" class="form-control">
         </div>
+        
     </div>
 
     <input type="submit" value="Salvar" class="btn btn-success" 
@@ -108,6 +123,7 @@
 
     window.onload = function() {
     $("#CPF").inputmask('999.999.999-99');
+    $("#Placa").inputmask('AAA-9999');
     }
 
 </script>

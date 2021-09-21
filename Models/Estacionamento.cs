@@ -17,8 +17,10 @@ namespace Estacionamento.Models
         public int IdEstabelecimento { get; set; }
         public string Nome { get; set; }
         public string NomeManobrista { get; set; }
+        public string Marca { get; set; }
         public string Modelo { get; set; }
-        public string  Placa { get; set; }
+        public string Placa { get; set; }
+        public string Cor { get; set; }
         public string Status { get; set; }
         public string Localizacao { get; set; }
         public int IdTipoVeiculo { get; set; }

@@ -50,7 +50,9 @@ namespace Estacionamento.Controllers
             } else {
                 estacionamento.IdEstabelecimento = idestabelecimento;
             }
-     
+
+            ViewBagVagas(id > 0 ? estacionamento.IdEstabelecimento : idestabelecimento);
+            ViewBagManobristas();
             ViewBagTiposVeiculos();
             ViewBagEstabelecimentos();
             return View(estacionamento);
@@ -85,6 +87,8 @@ namespace Estacionamento.Controllers
                 }
             }
 
+            ViewBagVagas(estacionamento.IdEstabelecimento);
+            ViewBagManobristas();
             ViewBagTiposVeiculos();
             ViewBagEstabelecimentos();
             return View(estacionamento);
@@ -137,6 +141,30 @@ namespace Estacionamento.Controllers
                 Text= c.Tipo, Value= c.Id.ToString()
             }).ToList();
         }
+
+        private void ViewBagVagas(int idestabelecimento){
+            MySqlParameter[] param = new MySqlParameter[]{
+                new MySqlParameter("_IdEstabelecimento", idestabelecimento)
+            };
+            List<Models.Vaga> vagas = new List<Models.Vaga>(); 
+            vagas = _context.RetornarLista<Models.Vaga>("sp_consultarVaga", param);
+            
+            ViewBag.Vagas = vagas.Select(c => new SelectListItem(){
+                Text= c.Id +" - "+ c.Localizacao, Value= c.Id.ToString()
+            }).ToList();
+        }
+
+        private void ViewBagManobristas(){
+            MySqlParameter[] param = new MySqlParameter[]{
+                new MySqlParameter("_nome", "")
+            };
+            List<Models.Manobrista> manobristas = new List<Models.Manobrista>(); 
+            manobristas = _context.RetornarLista<Models.Manobrista>("sp_consultarManobrista", param);
+            
+            ViewBag.Manobristas = manobristas.Select(c => new SelectListItem(){
+                Text= c.Nome, Value= c.Id.ToString()
+            }).ToList();
+        } 
                 
     }
 }
