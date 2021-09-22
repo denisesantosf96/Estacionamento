@@ -8,12 +8,12 @@ namespace Estacionamento.Models
         public int IdVeiculo { get; set; }
         public int IdVaga { get; set; }
         public int IdManobrista { get; set; }
-        public int IdCliente { get; set; }
+        public int? IdCliente { get; set; }
         public DateTime Data { get; set; }
         public string Situacao { get; set; }
         public string FormaPagamento { get; set; }
         public decimal ValorTotal { get; set; }
-        public DateTime DataPagamento { get; set; }
+        public DateTime? DataPagamento { get; set; }
         public int IdEstabelecimento { get; set; }
         public string Nome { get; set; }
         public string NomeManobrista { get; set; }

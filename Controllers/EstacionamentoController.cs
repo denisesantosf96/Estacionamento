@@ -49,6 +49,7 @@ namespace Estacionamento.Controllers
                 estacionamento = _context.ListarObjeto<Models.Estacionamento>("sp_buscarEstacionamentoPorId", parametros); 
             } else {
                 estacionamento.IdEstabelecimento = idestabelecimento;
+                estacionamento.Data = DateTime.Now;
             }
 
             ViewBagVagas(id > 0 ? estacionamento.IdEstabelecimento : idestabelecimento);
@@ -60,6 +61,22 @@ namespace Estacionamento.Controllers
 
         [HttpPost]
         public IActionResult Detalhe(Models.Estacionamento estacionamento){
+        
+            if(string.IsNullOrEmpty(estacionamento.Placa)){
+                ModelState.AddModelError("", "A Placa deve ser preenchida");
+            }
+
+            if(string.IsNullOrEmpty(estacionamento.Marca)){
+                ModelState.AddModelError("", "A Marca deve ser preenchida");
+            }
+            if(string.IsNullOrEmpty(estacionamento.Modelo)){
+                ModelState.AddModelError("", "O Modelo deve ser preenchido");
+            }
+            if(string.IsNullOrEmpty(estacionamento.Cor)){
+                ModelState.AddModelError("", "A Cor deve ser preenchida");
+            }
+            
+
             if(ModelState.IsValid){
            
                 List<MySqlParameter> parametros = new List<MySqlParameter>(){
@@ -71,11 +88,20 @@ namespace Estacionamento.Controllers
                     new MySqlParameter("Situacao", estacionamento.Situacao),
                     new MySqlParameter("FormaPagamento", estacionamento.FormaPagamento),
                     new MySqlParameter("ValorTotal", estacionamento.ValorTotal),
-                    new MySqlParameter("DataPagamento", estacionamento.DataPagamento)
+                    new MySqlParameter("DataPagamento", estacionamento.DataPagamento),
+                    new MySqlParameter("Nome", estacionamento.Nome),
+                    new MySqlParameter("CPF", estacionamento.CPF)
 
                 };
                 if (estacionamento.Id > 0){
                     parametros.Add(new MySqlParameter("identificacao", estacionamento.Id));
+                }
+                else {
+                    parametros.Add(new MySqlParameter("Marca", estacionamento.Marca));
+                    parametros.Add(new MySqlParameter("Modelo", estacionamento.Modelo));
+                    parametros.Add(new MySqlParameter("Placa", estacionamento.Placa));
+                    parametros.Add(new MySqlParameter("Cor", estacionamento.Cor));
+                    parametros.Add(new MySqlParameter("IdTipoVeiculo", estacionamento.IdTipoVeiculo));
                 }
                 var retorno = _context.ListarObjeto<RetornoProcedure>(estacionamento.Id > 0? "sp_atualizarEstacionamento" : "sp_inserirEstacionamento", parametros.ToArray());
             
@@ -117,6 +143,26 @@ namespace Estacionamento.Controllers
             HttpContext.Session.SetInt32("IdEstabelecimento", idestabelecimento);
 
             return PartialView(estacionamentos.ToPagedList(1, itensPorPagina));
+        }
+
+        public JsonResult TrazerNomeCliente(string cpf){
+            MySqlParameter[] parametros = new MySqlParameter[]{
+                new MySqlParameter("cpfCliente", cpf)
+            };
+
+            Models.Cliente cliente = _context.ListarObjeto<Models.Cliente>("sp_consultarClienteCPF", parametros);
+
+            return new JsonResult(new {cliente});
+        }
+
+        public JsonResult TrazerVeiculo(string placa){
+            MySqlParameter[] parametros = new MySqlParameter[]{
+                new MySqlParameter("_placa", placa)
+            };
+
+            Models.Veiculo veiculo = _context.ListarObjeto<Models.Veiculo>("sp_consultarVeiculoPlaca", parametros);
+
+            return new JsonResult(new {veiculo});
         }
 
         private void ViewBagEstabelecimentos(){
