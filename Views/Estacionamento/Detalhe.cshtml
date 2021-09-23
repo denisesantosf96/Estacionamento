@@ -28,6 +28,7 @@
 
     <div class="row">
         <div class="col-md-4">
+            <input asp-for="IdEstabelecimento" type="hidden">
             <input asp-for="Id" type="hidden">
             <label class="form-label">Data</label>
             <input asp-for="Data" type="datetime-local" class="form-control">
@@ -53,7 +54,7 @@
         </div>
         <div class="col-md-2">
             <label class="form-label">Tipo de Veículo</label>
-            <select asp-items="@ViewBag.TiposVeiculos" asp-for="IdTipoVeiculo" class="form-control"></select>
+            <select asp-items="@ViewBag.TiposVeiculos" asp-for="IdTipoVeiculo" class="form-control" onchange="TrazerValorTipoVeiculo()"></select>
         </div>
         <div class="col-md-3">
             <input asp-for="IdVeiculo" type="hidden">
@@ -150,6 +151,19 @@
             });
 
     }
+
+    function TrazerValorTipoVeiculo(){
+        var url = "/Estacionamento/TrazerValorTipoVeiculo";
+        var parametros = { idtipoveiculo: $("#IdTipoVeiculo").val(), 
+        idestabelecimento: $("#IdEstabelecimento").val() }
+        $.get(url, parametros)
+            .done(function (data) {
+                $('#ValorTotal').val(data.estabelecimentoTipoVeiculo.valor);
+            });
+
+    }
+
+
 
     
 

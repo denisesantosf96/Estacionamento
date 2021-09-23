@@ -75,8 +75,11 @@ namespace Estacionamento.Controllers
             if(string.IsNullOrEmpty(estacionamento.Cor)){
                 ModelState.AddModelError("", "A Cor deve ser preenchida");
             }
-            
 
+            if(estacionamento.IdTipoVeiculo == 0){
+                ModelState.AddModelError("", "O Tipo de Veículo deve ser selecionado");
+            }
+            
             if(ModelState.IsValid){
            
                 List<MySqlParameter> parametros = new List<MySqlParameter>(){
@@ -165,6 +168,17 @@ namespace Estacionamento.Controllers
             return new JsonResult(new {veiculo});
         }
 
+        public JsonResult TrazerValorTipoVeiculo(int idtipoveiculo, int idestabelecimento){
+            MySqlParameter[] parametros = new MySqlParameter[]{
+                new MySqlParameter("_idTipoVeiculo", idtipoveiculo),
+                new MySqlParameter("_idEstabelecimento", idestabelecimento)
+            };
+
+            Models.EstabelecimentoTipoVeiculo estabelecimentoTipoVeiculo = _context.ListarObjeto<Models.EstabelecimentoTipoVeiculo>("sp_consultarValorTipoVeiculo", parametros);
+
+            return new JsonResult(new {estabelecimentoTipoVeiculo});
+        }
+
         private void ViewBagEstabelecimentos(){
             MySqlParameter[] param = new MySqlParameter[]{
                 new MySqlParameter("_nome", "")
@@ -182,6 +196,7 @@ namespace Estacionamento.Controllers
             };
             List<Models.TipoVeiculo> tiposveiculos = new List<Models.TipoVeiculo>(); 
             tiposveiculos = _context.RetornarLista<Models.TipoVeiculo>("sp_consultarTipoVeiculo", param);
+            tiposveiculos.Insert(0,new Models.TipoVeiculo(){ Tipo = "", Id = 0 });
             
             ViewBag.TiposVeiculos = tiposveiculos.Select(c => new SelectListItem(){
                 Text= c.Tipo, Value= c.Id.ToString()

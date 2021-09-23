@@ -25,5 +25,6 @@ namespace Estacionamento.Models
         public string Localizacao { get; set; }
         public int IdTipoVeiculo { get; set; }
         public string CPF { get; set; }
+        
     }
 }
