@@ -91,7 +91,6 @@ namespace Estacionamento.Controllers
                     new MySqlParameter("Situacao", estacionamento.Situacao),
                     new MySqlParameter("FormaPagamento", estacionamento.FormaPagamento),
                     new MySqlParameter("ValorTotal", estacionamento.ValorTotal),
-                    new MySqlParameter("DataPagamento", estacionamento.DataPagamento),
                     new MySqlParameter("Nome", estacionamento.Nome),
                     new MySqlParameter("CPF", estacionamento.CPF)
 

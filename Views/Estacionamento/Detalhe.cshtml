@@ -104,7 +104,7 @@
         </div>
         <div class="col-md-4">
             <label class="form-label">Data do Pagamento</label>
-            <input asp-for="DataPagamento" type="datetime-local" class="form-control">
+            <input asp-for="DataPagamento" type="text" class="form-control" disabled>
         </div>
 
     </div>
@@ -154,17 +154,14 @@
 
     function TrazerValorTipoVeiculo(){
         var url = "/Estacionamento/TrazerValorTipoVeiculo";
-        var parametros = { idtipoveiculo: $("#IdTipoVeiculo").val(), 
-        idestabelecimento: $("#IdEstabelecimento").val() }
+        var parametros = { idtipoveiculo : $("#IdTipoVeiculo").val(), 
+        idestabelecimento : $("#IdEstabelecimento").val() }
         $.get(url, parametros)
             .done(function (data) {
+                debugger;
                 $('#ValorTotal').val(data.estabelecimentoTipoVeiculo.valor);
             });
 
     }
-
-
-
-    
 
 </script>
