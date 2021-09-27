@@ -29,6 +29,10 @@
 
 <script>
 
+    window.onload = function () {
+        Pesquisar();
+    }
+
     function Redirecionar() {
         var estabelecimento = $('#idEstabelecimento').val(); 
         window.location = "Estacionamento/Detalhe?idestabelecimento="+estabelecimento 
