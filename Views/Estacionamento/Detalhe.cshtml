@@ -31,11 +31,11 @@
             <input asp-for="IdEstabelecimento" type="hidden">
             <input asp-for="Id" type="hidden">
             <label class="form-label">Data</label>
-            <input asp-for="Data" type="datetime-local" class="form-control">
+            <input asp-for="Data" type="datetime-local" class="form-control" disabled>
         </div>
         <div class="col-md-4">
             <label class="form-label">Situação</label>
-            <select asp-for="Situacao" class="form-control">
+            <select asp-for="Situacao" class="form-control" disabled>
                 <option>Aberto</option>
                 <option>Cancelado</option>
                 <option>Pago</option>
@@ -43,58 +43,58 @@
         </div>
         <div class="col-md-4">
             <label class="form-label">Vaga</label>
-            <select asp-items="@ViewBag.Vagas" asp-for="IdVaga" class="form-control"></select>
+            <select asp-items="@ViewBag.Vagas" asp-for="IdVaga" class="form-control" disabled></select>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-2">
             <label class="form-label">Placa</label>
-            <input asp-for="Placa" type="text" class="form-control" onblur="TrazerVeiculo()">
+            <input asp-for="Placa" type="text" class="form-control" onblur="TrazerVeiculo()" disabled>
         </div>
         <div class="col-md-2">
             <label class="form-label">Tipo de Veículo</label>
-            <select asp-items="@ViewBag.TiposVeiculos" asp-for="IdTipoVeiculo" class="form-control" onchange="TrazerValorTipoVeiculo()"></select>
+            <select asp-items="@ViewBag.TiposVeiculos" asp-for="IdTipoVeiculo" class="form-control" onchange="TrazerValorTipoVeiculo()" disabled></select>
         </div>
         <div class="col-md-3">
             <input asp-for="IdVeiculo" type="hidden">
             <label class="form-label">Marca</label>
-            <input asp-for="Marca" type="text" class="form-control">
+            <input asp-for="Marca" type="text" class="form-control" disabled>
         </div>
         <div class="col-md-3">
             <label class="form-label">Modelo</label>
-            <input asp-for="Modelo" type="text" class="form-control">
+            <input asp-for="Modelo" type="text" class="form-control" disabled>
         </div>
         <div class="col-md-2">
             <label class="form-label">Cor</label>
-            <input asp-for="Cor" type="text" class="form-control">
+            <input asp-for="Cor" type="text" class="form-control" disabled>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-4">
             <label class="form-label">CPF</label>
-            <input asp-for="CPF" type="text" class="form-control" maxlength="14" onblur="TrazerNome()">
+            <input asp-for="CPF" type="text" class="form-control" maxlength="14" onblur="TrazerNome()" disabled>
         </div>
         <div class="col-md-4">
             <input asp-for="IdCliente" type="hidden">
             <label class="form-label">Cliente</label>
-            <input asp-for="Nome" type="text" class="form-control">
+            <input asp-for="Nome" type="text" class="form-control" disabled>
         </div>
         <div class="col-md-4">
             <label class="form-label">Manobrista</label>
-            <select asp-items="@ViewBag.Manobristas" asp-for="IdManobrista" class="form-control"></select>
+            <select asp-items="@ViewBag.Manobristas" asp-for="IdManobrista" class="form-control" disabled></select>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-4">
             <label class="form-label">Valor Total</label>
-            <input asp-for="ValorTotal" type="text" class="form-control">
+            <input asp-for="ValorTotal" type="text" class="form-control" disabled>
         </div>
         <div class="col-md-4">
             <label class="form-label">Forma de Pagamento</label>
-            <select asp-for="FormaPagamento" class="form-control">
+            <select asp-for="FormaPagamento" class="form-control" disabled>
                 <option></option>
                 <option>Cartão de Crédito</option>
                 <option>Cartão de Débito</option>
@@ -125,6 +125,7 @@
     window.onload = function () {
         $("#CPF").inputmask('999.999.999-99');
         $("#Placa").inputmask('AAA-9999');
+        VerificarSituacao();
     }
 
     function TrazerNome() {
@@ -162,6 +163,40 @@
                 $('#ValorTotal').val(data.estabelecimentoTipoVeiculo.valor);
             });
 
+    }
+
+    function VerificarSituacao(){
+        var situacao = $('#Situacao').val();
+        if (situacao == 'Aberto'){
+            $('#Situacao').prop('disabled',false);
+            $('#IdVaga').prop('disabled',false);
+            $('#Placa').prop('disabled',false);
+            $('#IdTipoVeiculo').prop('disabled',false);
+            $('#Marca').prop('disabled',false);
+            $('#Modelo').prop('disabled',false);
+            $('#Cor').prop('disabled',false);
+            $('#CPF').prop('disabled',false);
+            $('#Nome').prop('disabled',false);
+            $('#IdManobrista').prop('disabled',false);
+            $('#ValorTotal').prop('disabled',false);
+            $('#FormaPagamento').prop('disabled',false);
+            $('#Data').prop('disabled',false);
+        } else {
+            $('#Situacao').prop('disabled',true);
+            $('#IdVaga').prop('disabled',true);
+            $('#Placa').prop('disabled',true);
+            $('#IdTipoVeiculo').prop('disabled',true);
+            $('#Marca').prop('disabled',true);
+            $('#Modelo').prop('disabled',true);
+            $('#Cor').prop('disabled',true);
+            $('#CPF').prop('disabled',true);
+            $('#Nome').prop('disabled',true);
+            $('#IdManobrista').prop('disabled',true);
+            $('#ValorTotal').prop('disabled',true);
+            $('#FormaPagamento').prop('disabled',true);
+            $('#DataPagamento').prop('disabled',true);
+            $('#Data').prop('disabled',true);
+        }
     }
 
 </script>
