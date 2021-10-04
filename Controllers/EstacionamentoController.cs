@@ -92,7 +92,9 @@ namespace Estacionamento.Controllers
                     new MySqlParameter("FormaPagamento", estacionamento.FormaPagamento),
                     new MySqlParameter("ValorTotal", estacionamento.ValorTotal),
                     new MySqlParameter("Nome", estacionamento.Nome),
-                    new MySqlParameter("CPF", estacionamento.CPF)
+                    new MySqlParameter("CPF", estacionamento.CPF),
+                    new MySqlParameter("Status", estacionamento.Status),
+                    new MySqlParameter("Localizacao", estacionamento.Localizacao)
 
                 };
                 if (estacionamento.Id > 0){
@@ -210,7 +212,7 @@ namespace Estacionamento.Controllers
             vagas = _context.RetornarLista<Models.Vaga>("sp_consultarVaga", param);
             
             ViewBag.Vagas = vagas.Select(c => new SelectListItem(){
-                Text= c.Id +" - "+ c.Localizacao, Value= c.Id.ToString()
+                Text= c.Id +" - "+ c.Localizacao +" - "+ c.Status, Value= c.Id.ToString()
             }).ToList();
         }
 
