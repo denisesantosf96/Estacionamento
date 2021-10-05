@@ -34,7 +34,11 @@
     <div class="row">
         <div class="col-md-6">
             <label class="form-label">Status</label>
-            <input asp-for="Status" type="text" class="form-control" >
+            <select asp-for="Status" class="form-control">
+                <option></option>
+                <option>Disponível</option>
+                <option>Locada</option>
+            </select>
         </div>
     </div>
     

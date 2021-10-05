@@ -59,14 +59,17 @@ namespace Estacionamento.Controllers
         [HttpPost]
         public IActionResult Detalhe(Models.Vaga vaga){
             
+            if(string.IsNullOrEmpty(vaga.Localizacao)){
+                ModelState.AddModelError("", "Localização já cadastrada");
+            }
 
             if(ModelState.IsValid){
            
                 List<MySqlParameter> parametros = new List<MySqlParameter>(){
                     
-                    new MySqlParameter("IdEstabelecimento", vaga.IdEstabelecimento),
-                    new MySqlParameter("Localizacao", vaga.Localizacao),
-                    new MySqlParameter("Status", vaga.Status)                  
+                    new MySqlParameter("_IdEstabelecimento", vaga.IdEstabelecimento),
+                    new MySqlParameter("_Localizacao", vaga.Localizacao),
+                    new MySqlParameter("_Status", vaga.Status)                  
                 };
                 if (vaga.Id > 0){
                     parametros.Add(new MySqlParameter("identificacao", vaga.Id));

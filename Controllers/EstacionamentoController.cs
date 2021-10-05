@@ -62,6 +62,10 @@ namespace Estacionamento.Controllers
         [HttpPost]
         public IActionResult Detalhe(Models.Estacionamento estacionamento){
         
+            if(string.IsNullOrEmpty(estacionamento.Localizacao)){
+                ModelState.AddModelError("", "Vaga indisponível");
+            }
+
             if(string.IsNullOrEmpty(estacionamento.Placa)){
                 ModelState.AddModelError("", "A Placa deve ser preenchida");
             }
@@ -93,9 +97,9 @@ namespace Estacionamento.Controllers
                     new MySqlParameter("ValorTotal", estacionamento.ValorTotal),
                     new MySqlParameter("Nome", estacionamento.Nome),
                     new MySqlParameter("CPF", estacionamento.CPF),
-                    new MySqlParameter("Status", estacionamento.Status),
-                    new MySqlParameter("Localizacao", estacionamento.Localizacao)
-
+                    new MySqlParameter("_Status", estacionamento.Status),
+                    new MySqlParameter("_Localizacao", estacionamento.Localizacao),
+                    new MySqlParameter("_IdEstabelecimento", estacionamento.IdEstabelecimento)
                 };
                 if (estacionamento.Id > 0){
                     parametros.Add(new MySqlParameter("identificacao", estacionamento.Id));
@@ -206,7 +210,8 @@ namespace Estacionamento.Controllers
 
         private void ViewBagVagas(int idestabelecimento){
             MySqlParameter[] param = new MySqlParameter[]{
-                new MySqlParameter("_IdEstabelecimento", idestabelecimento)
+                new MySqlParameter("_IdEstabelecimento", idestabelecimento),
+                new MySqlParameter("_status", "")
             };
             List<Models.Vaga> vagas = new List<Models.Vaga>(); 
             vagas = _context.RetornarLista<Models.Vaga>("sp_consultarVaga", param);
