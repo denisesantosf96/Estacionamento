@@ -45,21 +45,7 @@
     }
 
     function Excluir(id) {
-        var result = confirm("Tem certeza que quer excluir?");
-        if (result) {
-            var url = "/Vaga/Excluir";
-            var parametros = { id: id };
-            $.get(url, parametros) 
-                .done(function (data) { 
-
-                    if (data.sucesso) { 
-                        document.location.reload(true);
-                    } else {
-                        alert(data.mensagem);
-                    }
-
-                });
-        }
+        alert("Solicitação negada! A Vaga só pode ser excluída através do Estacionamento");
     }
 
 </script>
