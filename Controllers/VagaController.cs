@@ -31,10 +31,9 @@ namespace Estacionamento.Controllers
             
 
             MySqlParameter[] parametros = new MySqlParameter[]{
-                new MySqlParameter("_IdEstabelecimento", idEstabelecimento),
-                new MySqlParameter("_status", status)
+                new MySqlParameter("_IdEstabelecimento", idEstabelecimento)
             };
-            List<Vaga> vagas = _context.RetornarLista<Vaga>("sp_consultarVaga", parametros);
+            List<Vaga> vagas = _context.RetornarLista<Vaga>("sp_consultarTodasVagas", parametros);
             
             ViewBagEstabelecimentos();
             return View(vagas.ToPagedList(numeroPagina, itensPorPagina));
@@ -99,11 +98,10 @@ namespace Estacionamento.Controllers
         public PartialViewResult ListaPartialView(int idestabelecimento,string status){
             
             MySqlParameter[] parametros = new MySqlParameter[]{
-                new MySqlParameter("_IdEstabelecimento", idestabelecimento),
-                new MySqlParameter("_status", status)
+                new MySqlParameter("_IdEstabelecimento", idestabelecimento)
                 
             };
-            List<Vaga> vagas = _context.RetornarLista<Vaga>("sp_consultarVaga", parametros);
+            List<Vaga> vagas = _context.RetornarLista<Vaga>("sp_consultarTodasVagas", parametros);
             if (string.IsNullOrEmpty(status)){
                 HttpContext.Session.Remove("TextoPesquisa");
             } else {

@@ -36,6 +36,7 @@
         <div class="col-md-4">
             <label class="form-label">Situação</label>
             <select asp-for="Situacao" class="form-control" disabled>
+                <option></option>
                 <option>Aberto</option>
                 <option>Cancelado</option>
                 <option>Pago</option>
@@ -167,7 +168,7 @@
 
     function VerificarSituacao(){
         var situacao = $('#Situacao').val();
-        if (situacao == 'Aberto'){
+        if (situacao == 'Aberto' || situacao == ""){
             $('#Situacao').prop('disabled',false);
             $('#IdVaga').prop('disabled',false);
             $('#Placa').prop('disabled',false);
