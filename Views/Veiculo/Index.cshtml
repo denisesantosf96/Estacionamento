@@ -11,7 +11,7 @@
 <div class="text-center">
     <h4>Cadastro de Veículos</h4>
     <select id="IdEstabelecimento" asp-items="@ViewBag.Estabelecimentos" class="form-control" onchange="Pesquisar()"></select>
-    <input type="text" id="textopesquisa" class="form-control" onkeyup="VerificarDigitacao(event)" value="@HttpContextAccessor.HttpContext.Session.GetString("TextoPesquisa")" placeholder="Digite sua pesquisa">
+    <input type="text" id="textopesquisa" class="form-control" onkeyup="VerificarDigitacao(event)" value="@HttpContextAccessor.HttpContext.Session.GetString("TextoPesquisa")" placeholder="⌕   Pesquisar">
     <input type="button" value="Limpar" onclick="Limpar()" class="btn btn-primary">
     <input type="button" value="Pesquisar" onclick="Pesquisar()" class="btn btn-primary">
     <a asp-area="" asp-controller="Veiculo" asp-action="Detalhe"><input type="button" value="Novo"
