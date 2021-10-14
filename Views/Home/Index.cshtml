@@ -1,8 +1,73 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Parking System";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<div class="text-center" style="padding-top: 80px; padding-bottom: 80px; width: 800px; margin-left: auto; margin-right: auto;">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="https://images.pexels.com/photos/1000633/pexels-photo-1000633.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" 
+                alt="Estacionamento" style="height: 400px; width: 800px; margin-left: auto; margin-right: auto; 
+                margin-top: auto; margin-bottom: auto;">
+                <div class="carousel-caption">
+                    <h3>Precisa de um sistema para seu estacionamento?</h3>
+                    <p>Com o Parking System você terá!</p>
+                </div>
+            </div>
+
+            <div class="item">
+                <img src="https://images.pexels.com/photos/97075/pexels-photo-97075.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" 
+                alt="Prato de comida sendo servido" style="height: 400px; width: 800px; margin-left: auto; margin-right: auto; 
+                margin-top: auto; margin-bottom: auto;">
+                <div class="carousel-caption">
+                    <h3>Segurança e confiança ao deixar seu automóvel</h3>
+                    <p>Atendentes sempre prontos ao seu dispor</p>
+                </div>
+            </div>
+
+            <div class="item">
+                <img src="https://images.pexels.com/photos/4921266/pexels-photo-4921266.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" 
+                alt="New York" style="height: 400px; width: 800px; margin-left: auto; margin-right: auto; 
+                margin-top: auto; margin-bottom: auto;">
+                <div class="carousel-caption">
+                    <h3>Seu pagamento a um click!</h3>
+                    <p>É rápido e sem complicações</p>
+                </div>
+            </div>
+
+            <div class="item">
+                <img src="https://images.pexels.com/photos/4606336/pexels-photo-4606336.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" 
+                alt="New York" style="height: 400px; width: 800px; margin-left: auto; margin-right: auto; 
+                margin-top: auto; margin-bottom: auto;">
+                <div class="carousel-caption">
+                    <h3>A satisfação do cliente nas suas mãos!</h3>
+                    <p>Cadastre seu estabelecimento, e tenha esse controle para melhor atendê-lo!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+            <span class="sr-only">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+            <span class="sr-only">Próximo</span>
+        </a>
+    </div>
 </div>
