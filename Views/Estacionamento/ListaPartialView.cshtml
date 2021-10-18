@@ -3,7 +3,7 @@
 @using X.PagedList.Web.Common;
 
 <table class="table">
-        <thead class="thead-dark">
+    <thead class="thead-dark">
         <tr>
             <th>Id</th>
             <th>Veículo</th>
@@ -16,24 +16,33 @@
 
             <th></th>
         </tr>
-        </thead>
-        <tbody>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
             @for (int i = 0; i < Model.Count; i++)
             {
-            <tr>
-            <td>@Model[i].Id</td>
-            <td>@Model[i].Modelo - @Model[i].Placa</td>
-            <td>@Model[i].IdVaga - @Model[i].Localizacao - @Model[i].Status</td>
-            <td>@Model[i].NomeManobrista</td>
-            <td>@Model[i].Nome</td>
-            <td>@Model[i].ValorTotal</td>
-            <td><input type="button" value="Editar" class="btn btn-dark" onclick="javascript:window.location=`/Estacionamento/Detalhe/${@Model[i].Id}`">
-            <input type="button" value="Excluir" class="btn btn-danger" onclick="Excluir(@Model[i].Id)"></td>
-            
-            </tr>
-            }
-        
-        </tbody>
-    </table>
+                <tr>
+                    <td>@Model[i].Id</td>
+                    <td>@Model[i].Modelo - @Model[i].Placa</td>
+                    <td>@Model[i].IdVaga - @Model[i].Localizacao - @Model[i].Status</td>
+                    <td>@Model[i].NomeManobrista</td>
+                    <td>@Model[i].Nome</td>
+                    <td>@Model[i].ValorTotal</td>
+                    <td><input type="button" value="Editar" class="btn btn-dark"
+                    onclick="javascript:window.location=`/Estacionamento/Detalhe/${@Model[i].Id}`">
+                        <input type="button" value="Excluir" class="btn btn-danger" onclick="Excluir(@Model[i].Id)">
+                    </td>
 
+                </tr>
+            }
+        }
+
+
+    </tbody>
+</table>
+
+@if (Model != null)
+{
     @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }))
+}

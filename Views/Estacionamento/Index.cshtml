@@ -17,11 +17,12 @@
     <option>Cancelado</option>
     <option>Pago</option>
     </select>
-    <select id="idEstabelecimento" class="form-control" onchange="Pesquisar()" asp-items="@ViewBag.Estabelecimentos"></select>   
+    <select id="idEstabelecimento" class="form-control" onchange="Pesquisar()" asp-items="@ViewBag.Estabelecimentos"></select>
+    <input type="hidden" id="Pagina" value="@ViewBag.NumeroPagina"/>   
     <input type="text" class="form-control" id="textopesquisa" onkeyup="VerificarDigitacao(event)" value="@HttpContextAccessor.HttpContext.Session.GetString("TextoPesquisa")" placeholder="⌕   Pesquisar">
-    <input type="button" value="Limpar" onclick="Limpar()" class="btn btn-primary">
-    <input type="button" value="Pesquisar" onclick="Pesquisar()" class="btn btn-primary">
-    <input type="button" value="Novo" onclick="Redirecionar()" class="btn btn-primary" style="margin-top: 30px; margin-bottom: 30px;">
+    <input type="button" value="Limpar" onclick="Limpar()" class="btn btn-primary"/>
+    <input type="button" value="Pesquisar" onclick="Pesquisar()" class="btn btn-primary"/>
+    <input type="button" value="Novo" onclick="Redirecionar()" class="btn btn-primary" style="margin-top: 30px; margin-bottom: 30px;"/>
     <div id="divpartial">
         <partial name="~/Views/Estacionamento/ListaPartialView.cshtml" />
     </div>
@@ -46,8 +47,10 @@
     function Pesquisar() {
         var result = $('#textopesquisa').val(); 
         var idEstabelecimento = $('#idEstabelecimento').val();
+        var numeroPagina = $('#Pagina').val();
         var url = "/Estacionamento/ListaPartialView";
-        var parametros = { situacao : $('#situacao').val(),idEstabelecimento : idEstabelecimento };
+        var parametros = { situacao : $('#situacao').val(),idEstabelecimento : idEstabelecimento, 
+        numeroPagina : numeroPagina};
         $.get(url, parametros) 
             .done(function (data) {
                 $('#divpartial').html(data);  

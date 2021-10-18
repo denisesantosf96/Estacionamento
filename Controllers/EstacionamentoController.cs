@@ -29,14 +29,15 @@ namespace Estacionamento.Controllers
             var situacao = HttpContext.Session.GetString("situacao");          
             int numeroPagina = (pagina ?? 1); 
 
-            MySqlParameter[] parametros = new MySqlParameter[]{
+           /*MySqlParameter[] parametros = new MySqlParameter[]{
                 new MySqlParameter("_IdEstabelecimento", idEstabelecimento),
                 new MySqlParameter("_situacao", situacao)
-            };
-            List<Estacionamento.Models.Estacionamento> estacionamentos = _context.RetornarLista<Estacionamento.Models.Estacionamento>("sp_consultarEstacionamento", parametros);
+            };*/
+            //List<Estacionamento.Models.Estacionamento> estacionamentos = _context.RetornarLista<Estacionamento.Models.Estacionamento>("sp_consultarEstacionamento", parametros);
             
+            ViewBag.NumeroPagina = numeroPagina;
             ViewBagEstabelecimentos();
-            return View(estacionamentos.ToPagedList(numeroPagina, itensPorPagina));
+            return View(); //(estacionamentos.ToPagedList(numeroPagina, itensPorPagina));
         }
 
         public IActionResult Detalhe(int id, int idestabelecimento)
@@ -132,7 +133,7 @@ namespace Estacionamento.Controllers
             return new JsonResult(new {Sucesso = retorno.Mensagem == "Excluído", Mensagem = retorno.Mensagem });
         }
 
-        public PartialViewResult ListaPartialView(string situacao, int idestabelecimento){
+        public PartialViewResult ListaPartialView(string situacao, int idestabelecimento, int numeroPagina){
             MySqlParameter[] parametros = new MySqlParameter[]{
                 new MySqlParameter("_IdEstabelecimento", idestabelecimento),
                 new MySqlParameter("_situacao", situacao)
@@ -146,7 +147,7 @@ namespace Estacionamento.Controllers
 
             HttpContext.Session.SetInt32("IdEstabelecimento", idestabelecimento);
 
-            return PartialView(estacionamentos.ToPagedList(1, itensPorPagina));
+            return PartialView(estacionamentos.ToPagedList(numeroPagina, itensPorPagina));
         }
 
         public JsonResult TrazerNomeCliente(string cpf){
