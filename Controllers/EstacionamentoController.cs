@@ -63,6 +63,10 @@ namespace Estacionamento.Controllers
         [HttpPost]
         public IActionResult Detalhe(Models.Estacionamento estacionamento){
 
+            if(string.IsNullOrEmpty(estacionamento.Situacao)){
+                ModelState.AddModelError("", "A Situação deve ser selecionada");
+            }
+
             if(string.IsNullOrEmpty(estacionamento.Placa)){
                 ModelState.AddModelError("", "A Placa deve ser preenchida");
             }
@@ -70,9 +74,11 @@ namespace Estacionamento.Controllers
             if(string.IsNullOrEmpty(estacionamento.Marca)){
                 ModelState.AddModelError("", "A Marca deve ser preenchida");
             }
+
             if(string.IsNullOrEmpty(estacionamento.Modelo)){
                 ModelState.AddModelError("", "O Modelo deve ser preenchido");
             }
+            
             if(string.IsNullOrEmpty(estacionamento.Cor)){
                 ModelState.AddModelError("", "A Cor deve ser preenchida");
             }
