@@ -25,7 +25,7 @@ namespace Estacionamento.Controllers
         
         public IActionResult Index(int? pagina)
         {   
-            var idEstabelecimento = 1;
+           // var idEstabelecimento = 1;
             var situacao = HttpContext.Session.GetString("situacao");          
             int numeroPagina = (pagina ?? 1); 
 
